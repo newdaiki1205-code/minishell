@@ -50,5 +50,6 @@ char				*make_unit(char *str);
 void				free_str(char **str, int i);
 int					is_ope(char c);
 int					ope_continue(char *c);
+int del_identify(char *str);
 
 #endif
