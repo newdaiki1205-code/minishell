@@ -26,50 +26,49 @@ int	token_count(char *str) //ignore space in quotation
 {
 	int	i;
 	int	num;
+	char quote;
 
 	i = 0;
 	num = 0;
-	while (!(str[i] >= 33 && str[i] < 127)) //delete space until the first token
+	while (is_space(str[i])) //delete space until the first token
 		i++;
 	while (str[i]) // count token = white space, operater, quotation
 	{
 		num++;
-		while(str[i] && (str[i] >= 33 && str[i] < 127) && !is_ope(str[i]))
+		while(str[i] && !is_space(str[i]) && !is_ope(str[i]) && !is_quote(str[i]))
 			i++;
 		if (str[i] == ' ')
 		{
-			while (str[i] && !(str[i] >= 33 && str[i] < 127))
+			printf("space %d\n", num);
+			while (str[i] && is_space(str[i]))
 				i++;
 		}
 		else if(is_ope(str[i]))
 		{
-			if(str[i - 1] != ' ')
+			printf("ope %d\n", num);
+			if(!is_space(str[i - 1]) && !is_quote(str[i - 1]) && !is_ope(str[i - 1]))
 				num++;
 			if (ope_continue(&str[i]))
 				i++;
 			i++;
-			while (str[i] && !(str[i] >= 33 && str[i] < 127))
+			while (str[i] && is_space(str[i]))
+				i++;
+		}
+		else if (is_quote(str[i]))
+		{
+			printf("quote %d\n", num);
+			if(!is_space(str[i - 1]) && !is_quote(str[i - 1]) && !is_ope(str[i - 1]))
+				num++;
+			quote = str[i];
+			i++;
+			while(str[i] && str[i] != quote)
+				i++;
+			i++;
+			while (str[i] && is_space(str[i]))
 				i++;
 		}
 	}
 	return num;
-}
-
-
-int is_ope(char c)
-{
-	if(c == '>' || c == '<' || c == '|')
-		return 1;
-	return 0;
-}
-
-int ope_continue(char *c)
-{
-	if (*c == '<' && *(c + 1) == '<')
-		return 1;
-	else if (*c == '>' && *(c + 1) == '>')
-		return 1;
-	return 0;
 }
 
 char	*make_unit(char *str)
@@ -77,6 +76,7 @@ char	*make_unit(char *str)
 	int		size;
 	int		i;
 	char	*new;
+	char quote;
 
 	size = 0;
 	i = 0;
@@ -86,6 +86,14 @@ char	*make_unit(char *str)
 			size = 2;
 		else
 			size = 1;
+	}
+	else if (is_quote(*str))
+	{
+		quote = str[size];
+		size++;
+		while(str[size] && str[size] != quote)
+			size++;
+		size++;
 	}
 	else
 		size = del_identify(str);
@@ -105,8 +113,17 @@ char	*make_unit(char *str)
 int del_identify(char *str)
 {
 	int size = 0;
+	char quote;
 
-	while((str[size] >= 33 && str[size] < 127) && !is_ope(str[size]))
+	if(*str == 34 || *str == 39)
+	{
+		quote = *str;
+		size++;
+		while(str[size] && str[size] != quote)
+			size++;
+		return size + 1;
+	}
+	while(!is_space(str[size]) && !is_ope(str[size]) &&!is_quote(str[size]))
 		size++;
 	return size;
 }
@@ -127,6 +144,7 @@ char	**ft_split(char *str)
 	char	**new;
 	int		size;
 	int		i;
+	char quote;
 
 	if (!str)
 		return (NULL);
@@ -138,7 +156,7 @@ char	**ft_split(char *str)
 		return (NULL);
 	while (i < size)
 	{
-		while (*str && !(*str >= 33 && *str < 127))
+		while (*str && is_space(*str))
 			str++;
 		new[i] = make_unit(str);
 		if (!new[i])
@@ -150,9 +168,17 @@ char	**ft_split(char *str)
 			else
 				str++;
 		}
+		else if (*str && is_quote(*str))
+		{
+			quote = *str;
+			str++;
+			while(*str && *str!= quote)
+				str++;
+			str++;
+		}
 		else
 		{
-			while (*str && (*str >= 33 && *str < 127) && !is_ope(*str))
+			while (*str && !is_space(*str) && !is_ope(*str) &&!is_quote(*str))
 				str++;
 		}
 		i++;
@@ -164,7 +190,7 @@ char	**ft_split(char *str)
 // int	main(void)
 // {
 // 	char **test;
-// 	char src[] = "echo 'hello'";
+// 	char src[] = "echo hello";
 
 // 	test = ft_split(src);
 // 	if (!test)

@@ -51,5 +51,7 @@ void				free_str(char **str, int i);
 int					is_ope(char c);
 int					ope_continue(char *c);
 int del_identify(char *str);
+int is_space(char c);
+int is_quote(char c);
 
 #endif

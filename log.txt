@@ -1,0 +1,73 @@
+minishell$ echo "hello "world" new" //keep going until hitting pipe or redir out of quotation
+3
+echo
+"hello "
+world"
+
+minishell$ echo "hello"
+2
+echo
+"hello"
+minishell$ echo "hello" world
+3
+echo
+"hello"
+world
+minishell$ echo "hello 'world' hi"
+2
+echo
+"hello 'world' hi"
+minishell$ echo "hello" "world"
+3
+echo
+"hello"
+"world"
+
+
+
+close when it hits NULL, Pipe or Redirector as long as it closed
+
+bash-3.2$ echo 'hello '|' world'
+bash:  world: command not found
+bash-3.2$ echo 'hello "|" world'
+hello "|" world
+
+Enclosing characters in single-quotes ( '' ) shall preserve the literal value of each character within the single-quotes. 
+A single-quote cannot occur within single-quotes.
+
+bash-3.2$ echo 'It'\''s rain'          //no need to implement back-slash
+It's rain
+bash-3.2$ echo "He said, \"Hello.\""   //no need to implement back-slash
+He said, "Hello."
+bash-3.2$  echo "He said, "Hello.""
+He said, Hello.
+
+#combination quotes
+bash-3.2$ echo "hello "world" new"
+hello world new
+
+echo 'hello 'wolrd' new'
+hello wolrd new
+
+bash-3.2$ echo 'hello "world" new'
+hello "world" new
+
+bash-3.2$ echo "hello 'world' new"
+hello 'world' new
+
+bash-3.2$ echo 'hello "world" new
+> '
+hello "world" new
+
+
+#with pipe
+bash-3.2$ echo "hello | "world""
+hello | world
+
+bash-3.2$ echo "hello | "world"" | ls
+a.out                   ft_split.c              ft_split_utils.c        log.txt                 tokenize.c              tokenize.h
+
+#with redirect
+echo "hello | "world"" >> test.txt
+bash-3.2$ cat test.txt 
+hello | world
