@@ -6,7 +6,7 @@
 /*   By: dshirais <dshirais@student.42vienna.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/30 19:07:20 by dshirais          #+#    #+#             */
-/*   Updated: 2026/03/30 19:39:15 by dshirais         ###   ########.fr       */
+/*   Updated: 2026/03/30 20:10:21 by dshirais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ t_token	*make_new_token(t_token *head, char *value)
 	if (!new->value)
 		return (NULL);
 	type_categorizer(new);
-	quote_categoriyer(new);
+	quote_categorizer(new);
 	token_add_back(head, new);
 	return (head);
 }
@@ -75,8 +75,8 @@ void	token_add_back(t_token *head, t_token *new)
 
 	if (!head)
 	{
-		new->next = NULL;
-		return (new);
+		head = new;
+        new->next = NULL;
 	}
 	else
 	{
