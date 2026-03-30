@@ -6,7 +6,7 @@
 /*   By: dshirais <dshirais@student.42vienna.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/30 19:07:20 by dshirais          #+#    #+#             */
-/*   Updated: 2026/03/30 20:10:21 by dshirais         ###   ########.fr       */
+/*   Updated: 2026/03/30 21:03:07 by dshirais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ t_token	*make_new_token(t_token *head, char *value)
 		return (NULL);
 	type_categorizer(new);
 	quote_categorizer(new);
-	token_add_back(head, new);
+	token_add_back(&head, new);
 	return (head);
 }
 
@@ -69,18 +69,18 @@ void	quote_categorizer(t_token *token)
 		token->quote = DEF;
 }
 
-void	token_add_back(t_token *head, t_token *new)
+void	token_add_back(t_token **head, t_token *new)
 {
 	t_token *tmp;
 
-	if (!head)
+	if (!*head)
 	{
-		head = new;
+		*head = new;
         new->next = NULL;
 	}
 	else
 	{
-		tmp = head;
+		tmp = *head;
 		while (tmp->next)
 			tmp = tmp->next;
 		tmp->next = new;

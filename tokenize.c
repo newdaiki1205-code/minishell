@@ -6,7 +6,7 @@
 /*   By: dshirais <dshirais@student.42vienna.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/30 20:30:03 by dshirais          #+#    #+#             */
-/*   Updated: 2026/03/30 20:35:36 by dshirais         ###   ########.fr       */
+/*   Updated: 2026/03/30 21:02:17 by dshirais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ int	main(void)
 	char *input;
 	int i;
 
+    tokens = NULL;
 	while (1)
 	{
 		input = readline("minishell$ ");
@@ -30,7 +31,7 @@ int	main(void)
         tokens = toknizer(tokens, splited);
 		while (tokens)
 		{
-			printf("%s\n", tokens->value);
+            printf("%s\n", tokens->value);
 			tokens = tokens->next;
 		}
 		i = 0;

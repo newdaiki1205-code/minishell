@@ -6,7 +6,7 @@
 /*   By: dshirais <dshirais@student.42vienna.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/23 15:02:16 by dshirais          #+#    #+#             */
-/*   Updated: 2026/03/30 20:04:50 by dshirais         ###   ########.fr       */
+/*   Updated: 2026/03/30 20:59:35 by dshirais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,6 @@ t_token				*toknizer(t_token *head, char **splited);
 t_token				*make_new_token(t_token *head, char *value);
 void				type_categorizer(t_token *token);
 void				quote_categorizer(t_token *token);
-void				token_add_back(t_token *head, t_token *new);
+void				token_add_back(t_token **head, t_token *new);
 
 #endif
