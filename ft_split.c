@@ -6,7 +6,7 @@
 /*   By: dshirais <dshirais@student.42vienna.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/30 15:49:02 by dshirais          #+#    #+#             */
-/*   Updated: 2026/03/30 15:59:51 by dshirais         ###   ########.fr       */
+/*   Updated: 2026/03/30 16:01:51 by dshirais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,4 +65,15 @@ char *make_unit(char *str)
     }
     new[size] = '\0';
     return (new);
+}
+
+void free_str(char **str, int i)
+{
+    i--;
+    while(i >= 0)
+    {
+        free(str[i]);
+        i--;
+    }
+    free(str);
 }
