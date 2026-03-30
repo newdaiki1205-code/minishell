@@ -6,7 +6,7 @@
 /*   By: dshirais <dshirais@student.42vienna.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/23 15:02:16 by dshirais          #+#    #+#             */
-/*   Updated: 2026/03/23 17:31:21 by dshirais         ###   ########.fr       */
+/*   Updated: 2026/03/26 14:34:34 by dshirais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,5 +53,11 @@ int					ope_continue(char *c);
 int del_identify(char *str);
 int is_space(char c);
 int is_quote(char c);
+
+int rule_1(char *s);
+int rule_2(char *s);
+int rule_3(char *s);
+int rule_4(char *s);
+int rule_5(char *s);
 
 #endif
