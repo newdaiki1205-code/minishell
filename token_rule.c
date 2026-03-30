@@ -6,7 +6,7 @@
 /*   By: dshirais <dshirais@student.42vienna.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/26 14:08:57 by dshirais          #+#    #+#             */
-/*   Updated: 2026/03/30 18:03:25 by dshirais         ###   ########.fr       */
+/*   Updated: 2026/03/30 19:39:25 by dshirais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,24 +24,36 @@ int	rule_1(char *s) // skip space
 
 int	rule_2(char *s) // tokenize operator
 {
-	if (*s && (*s == '>' || *s == '<' || *s == '|'))
+	int i;
+
+	i = 0;
+	if (s[i] && (s[i] == '>' || s[i] == '<' || s[i] == '|'))
 	{
-		if (*(s + 1) && rule_3(s))
-			return (2);
-		else
-			return (1);
+		return (rule_3(&s[i]));
 	}
 	return (0);
 }
 
 int	rule_3(char *s) // tokenize append and heredoc
 {
-	if (*s == '<' && *(s + 1) == '<')
-		return (1);
-	else if (*s == '>' && *(s + 1) == '>')
-		return (1);
-	return (0);
+	int i;
+	char c;
+
+	i = 1;
+	c = s[0];
+	while (s[i] && s[i] == c)
+		i++;
+	return (i);
 }
+
+// int	rule_3(char *s) // tokenize append and heredoc
+// {
+// 	if (*s == '<' && *(s + 1) == '<')
+// 		return (1);
+// 	else if (*s == '>' && *(s + 1) == '>')
+// 		return (1);
+// 	return (0);
+// }
 
 int	rule_4(char *s) // tokenize quotation sets
 {
