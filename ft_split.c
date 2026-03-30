@@ -6,7 +6,7 @@
 /*   By: dshirais <dshirais@student.42vienna.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/30 15:49:02 by dshirais          #+#    #+#             */
-/*   Updated: 2026/03/30 16:01:51 by dshirais         ###   ########.fr       */
+/*   Updated: 2026/03/30 17:56:40 by dshirais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,17 +22,23 @@ char **ft_split(char *str)
     if(!str)
         return NULL;
     size = token_count(str);
+    printf("token: %d\n", size);
     new = (char **)malloc(sizeof(char *) * (size + 1));
     if(!new)
         return NULL;
     i = 0;
-    pos = rule_1(&str[0]);
+    pos = 0;
     while(i < size)
     {
-        new[i] = make_unit(str[pos]);
+        // printf("current_pos: %d\n", pos);
+        pos += rule_1(&str[pos]);
+        //printf("make unit:");
+        new[i] = make_unit(&str[pos]);
         if(!new[i])
             return (free_str(new, i), NULL);
-        if(str[pos] == 34 || str[pos] == 39)
+        if (str[pos] == '>' || str[pos] == '<' || str[pos] == '|')
+			pos += rule_2(&str[pos]);
+        else if(str[pos] == 34 || str[pos] == 39)
             pos += rule_4(&str[pos]);
         else
             pos += rule_5(&str[pos]);
@@ -50,9 +56,9 @@ char *make_unit(char *str)
 
     i = 0;
     if (str[0] == '>' || str[0] == '<' || str[0] == '|')
-		size += rule_2(&str[0]);
+		size = rule_2(&str[0]);
     else if (str[0] == 34 || str[0] == 39)
-		size += rule_4(&str[0]);
+		size = rule_4(&str[0]);
     else
         size = rule_5(&str[0]);
     new = (char *)malloc(sizeof(char) * (size + 1));
@@ -77,3 +83,27 @@ void free_str(char **str, int i)
     }
     free(str);
 }
+
+// int	main(void)
+// {
+// 	char **test;
+// 	char src[] = "echo hello                |ls";
+
+// 	test = ft_split(src);
+// 	if (!test)
+// 		return (1);
+// 	int i = 0;
+// 	while (test && test[i])
+// 	{
+// 		printf("%s\n", test[i]);
+// 		i++;
+// 	}
+// 	i = 0;
+// 	while (test && test[i])
+// 	{
+// 		free(test[i]);
+// 		i++;
+// 	}
+// 	free(test);
+// 	return (0);
+// }

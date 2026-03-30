@@ -6,7 +6,7 @@
 /*   By: dshirais <dshirais@student.42vienna.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/23 15:02:16 by dshirais          #+#    #+#             */
-/*   Updated: 2026/03/26 14:34:34 by dshirais         ###   ########.fr       */
+/*   Updated: 2026/03/30 18:08:48 by dshirais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,8 @@ typedef enum e_type
 	HEREDOC,
 	I_RED,
 	O_RED,
-	PIPE
+	PIPE,
+	EoF
 }					t_type;
 
 typedef enum e_quote

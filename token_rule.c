@@ -6,7 +6,7 @@
 /*   By: dshirais <dshirais@student.42vienna.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/26 14:08:57 by dshirais          #+#    #+#             */
-/*   Updated: 2026/03/30 14:26:53 by dshirais         ###   ########.fr       */
+/*   Updated: 2026/03/30 18:03:25 by dshirais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	rule_1(char *s) // skip space
 	int i;
 
 	i = 0;
-	if (s[i] && (s[i] < 33 || s[i] > 127))
+	while (s[i] && (s[i] < 33 || s[i] > 127))
 		i++;
 	return (i);
 }
@@ -65,7 +65,14 @@ int	rule_5(char *s) // read until space or ope
 	int i;
 
 	i = 0;
-	while (s[i] && (s[i] >= 33 && s[i] < 127) && !rule_2(s))
+	while (s[i] && (s[i] >= 33 && s[i] < 127))
+	{
+		if (rule_2(&s[i]))
+			break ;
+		else if (rule_4(&s[i]))
+			break ;
 		i++;
+	}
+	// printf("return: %d\n", i);
 	return (i);
 }
