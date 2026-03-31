@@ -6,7 +6,7 @@
 /*   By: dshirais <dshirais@student.42vienna.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/30 15:49:02 by dshirais          #+#    #+#             */
-/*   Updated: 2026/03/30 17:56:40 by dshirais         ###   ########.fr       */
+/*   Updated: 2026/03/31 14:52:40 by dshirais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,19 @@ void free_str(char **str, int i)
         i--;
     }
     free(str);
+}
+
+void free_split(char **tab)
+{
+    int i;
+    
+    i = 0;
+	while (tab && tab[i])
+	{
+		free(tab[i]);
+		i++;
+	}
+    free(tab);
 }
 
 // int	main(void)
