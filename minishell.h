@@ -1,36 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser.h                                           :+:      :+:    :+:   */
+/*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dshirais <dshirais@student.42vienna.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/03/31 19:13:05 by dshirais          #+#    #+#             */
-/*   Updated: 2026/03/31 20:51:47 by dshirais         ###   ########.fr       */
+/*   Created: 2026/03/31 20:45:48 by dshirais          #+#    #+#             */
+/*   Updated: 2026/03/31 20:47:06 by dshirais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#ifndef MINISHELL_H
+# define MINISHELL_H
 
-#ifndef PARSER_H
-# define PARSER_H
-
-typedef enum
-{
-    ND_PIPE,
-    ND_COMMAND,
-    ND_ELEMENT,
-    ND_IO_RED,
-    ND_WORD
-} t_type;
-
-typedef struct s_node
-{
-    t_type type;
-    struct s_node *lhs;
-    struct s_node *rhs;
-    char *val; //used only in WORD
-} t_node;
-
+# include "/home/dshirais/Project_C/minishell/git/Include/libft.h"
+# include <readline/history.h>
+# include <readline/readline.h>
+# include <stdio.h>
+# include <stdlib.h>
 
 #endif

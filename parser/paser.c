@@ -1,36 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser.h                                           :+:      :+:    :+:   */
+/*   paser.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dshirais <dshirais@student.42vienna.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/03/31 19:13:05 by dshirais          #+#    #+#             */
-/*   Updated: 2026/03/31 20:51:47 by dshirais         ###   ########.fr       */
+/*   Created: 2026/03/31 20:48:36 by dshirais          #+#    #+#             */
+/*   Updated: 2026/03/31 20:52:48 by dshirais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "parser.h"
 
-#ifndef PARSER_H
-# define PARSER_H
-
-typedef enum
+t_node	*new_node(t_type kind, t_node *lhs, t_node *rhs)
 {
-    ND_PIPE,
-    ND_COMMAND,
-    ND_ELEMENT,
-    ND_IO_RED,
-    ND_WORD
-} t_type;
+	t_node	*node;
 
-typedef struct s_node
+	node = ft_calloc(1, sizeof(t_node));
+	node->type = kind;
+	node->lhs = lhs;
+	node->rhs = rhs;
+	return (node);
+}
+
+t_node	*new_node_word(int val)
 {
-    t_type type;
-    struct s_node *lhs;
-    struct s_node *rhs;
-    char *val; //used only in WORD
-} t_node;
+	t_node	*node;
 
-
-#endif
+	node = calloc(1, sizeof(t_node));
+	node->type = ND_WORD;
+	node->val = val;
+	return (node);
+}

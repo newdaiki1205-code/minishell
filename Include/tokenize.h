@@ -6,18 +6,14 @@
 /*   By: dshirais <dshirais@student.42vienna.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/23 15:02:16 by dshirais          #+#    #+#             */
-/*   Updated: 2026/03/31 15:54:17 by dshirais         ###   ########.fr       */
+/*   Updated: 2026/03/31 20:47:30 by dshirais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "minishell.h"
+
 #ifndef TOKENIZE_H
 # define TOKENIZE_H
-
-# include "/home/dshirais/Project_C/minishell/token/Include/libft.h"
-# include <readline/history.h>
-# include <readline/readline.h>
-# include <stdio.h>
-# include <stdlib.h>
 
 typedef enum e_type
 {
