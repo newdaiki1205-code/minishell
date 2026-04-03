@@ -1,22 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   paser.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dshirais <dshirais@student.42vienna.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/03/31 20:45:48 by dshirais          #+#    #+#             */
-/*   Updated: 2026/03/31 20:47:06 by dshirais         ###   ########.fr       */
+/*   Created: 2026/03/31 20:48:36 by dshirais          #+#    #+#             */
+/*   Updated: 2026/04/03 15:09:56 by dshirais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#include "parser.h"
 
-# include "/home/dshirais/Project_C/minishell/git/Include/libft.h"
-# include <readline/history.h>
-# include <readline/readline.h>
-# include <stdio.h>
-# include <stdlib.h>
+t_node	*parser(t_token *tokens)
+{
+	t_node *ret;
 
-#endif
+	ret = pipe_sequence(tokens);
+	if (!ret)
+		return (NULL);
+	return (ret);
+}

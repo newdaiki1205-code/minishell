@@ -6,7 +6,7 @@
 /*   By: dshirais <dshirais@student.42vienna.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/30 20:36:08 by dshirais          #+#    #+#             */
-/*   Updated: 2026/03/31 15:53:38 by dshirais         ###   ########.fr       */
+/*   Updated: 2026/04/03 15:02:13 by dshirais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ t_token	*toknizer(t_token *head, char **splited)
 	while (splited[i])
 	{
 		head = make_new_token(head, splited[i]);
+		if(!head)
+			return NULL;
 		i++;
 	}
 	return (head);

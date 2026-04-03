@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   paser.c                                            :+:      :+:    :+:   */
+/*   parser_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dshirais <dshirais@student.42vienna.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/03/31 20:48:36 by dshirais          #+#    #+#             */
-/*   Updated: 2026/03/31 20:52:48 by dshirais         ###   ########.fr       */
+/*   Created: 2026/04/03 14:53:54 by dshirais          #+#    #+#             */
+/*   Updated: 2026/04/03 15:20:34 by dshirais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
 
-t_node	*new_node(t_type kind, t_node *lhs, t_node *rhs)
+t_node	*new_node(t_ntype kind, t_node *lhs, t_node *rhs)
 {
 	t_node	*node;
 
@@ -23,7 +23,7 @@ t_node	*new_node(t_type kind, t_node *lhs, t_node *rhs)
 	return (node);
 }
 
-t_node	*new_node_word(int val)
+t_node	*new_node_word(char *val)
 {
 	t_node	*node;
 
@@ -31,4 +31,30 @@ t_node	*new_node_word(int val)
 	node->type = ND_WORD;
 	node->val = val;
 	return (node);
+}
+
+t_node	*new_node_redirect(char *val)
+{
+	t_node	*node;
+
+	node = calloc(1, sizeof(t_node));
+	node->type = ND_IO_RED;
+	node->val = val;
+	return (node);
+}
+
+bool	pipe_check(t_token *current)
+{
+	if (current->type != PIPE)
+		return (false);
+	current = current->next;
+	return (true);
+}
+
+bool	command_check(t_token *current)
+{
+	if (!current->next)
+		return (false);
+	current = current->next;
+	return (true);
 }
