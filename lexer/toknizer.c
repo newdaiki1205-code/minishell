@@ -6,7 +6,7 @@
 /*   By: dshirais <dshirais@student.42vienna.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/30 20:36:08 by dshirais          #+#    #+#             */
-/*   Updated: 2026/04/03 15:02:13 by dshirais         ###   ########.fr       */
+/*   Updated: 2026/04/03 15:59:05 by dshirais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ t_token	*toknizer(t_token *head, char **splited)
 			return NULL;
 		i++;
 	}
+	free_split(splited);
 	return (head);
 }
 

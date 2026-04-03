@@ -6,7 +6,7 @@
 /*   By: dshirais <dshirais@student.42vienna.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/30 20:30:03 by dshirais          #+#    #+#             */
-/*   Updated: 2026/04/03 15:10:17 by dshirais         ###   ########.fr       */
+/*   Updated: 2026/04/03 15:59:58 by dshirais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,7 @@ int	main(void)
 		print_tokeninfo(tokens);
 		ast = parser(tokens);
 		if (!ast)
-			return (free_tokens(tokens), free_split(splited), free(input), 1);
-		free_split(splited);
-		free_tokens(tokens);
+			return (free_tokens(tokens), free(input), 1);
 		free(input);
 	}
 	rl_clear_history();

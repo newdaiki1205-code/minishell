@@ -6,7 +6,7 @@
 /*   By: dshirais <dshirais@student.42vienna.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/31 19:13:05 by dshirais          #+#    #+#             */
-/*   Updated: 2026/04/03 15:20:22 by dshirais         ###   ########.fr       */
+/*   Updated: 2026/04/03 16:23:43 by dshirais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,24 @@ typedef enum
 {
 	ND_PIPE,
 	ND_COMMAND,
-	ND_ELEMENT,
 	ND_IO_RED,
 	ND_WORD
 }					t_ntype;
+
+// typedef enum
+// {
+// 	ND_INPUT,
+// 	ND_OUTPUT,
+// 	ND_APPEND,
+// 	ND_HEREDOC
+// }					t_nred;
+
+// typedef enum
+// {
+// 	ND_DEF,
+// 	ND_SINGLE,
+// 	ND_DOUBLE
+// }					t_nquote;
 
 typedef struct s_node
 {
@@ -30,6 +44,8 @@ typedef struct s_node
 	struct s_node	*lhs;
 	struct s_node	*rhs;
 	char *val; // used only in WORD
+	//t_nred redirect; //used only token_type=RED
+	//t_nquote quote; //used only token_quote !=DEF
 }					t_node;
 
 t_node				*parser(t_token *tokens);
