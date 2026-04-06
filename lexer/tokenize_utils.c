@@ -25,14 +25,3 @@ void free_tokens(t_token *tokens)
 	}
 }
 
-void print_tokeninfo(t_token *tokens)
-{
-	while (tokens)
-	{
-        printf("Type: %d\n", tokens->type);
-		printf("Quote: %d\n", tokens->quote);
-		printf("Value: %s\n", tokens->value);
-		printf("\n");
-		tokens = tokens->next;
-	}
-}

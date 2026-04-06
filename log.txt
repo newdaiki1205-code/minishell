@@ -1,3 +1,8 @@
+07.04
+need to implement syntax error of pipe
+need to implement free node
+
+
 valgrind --leak-check=full --show-leak-kinds=all ./lexer 
 ==734392== Memcheck, a memory error detector
 ==734392== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.

@@ -24,4 +24,8 @@
 # include "tokenize.h"
 # include "parser.h"
 
+void debug_parser(t_node *tree);
+void				print_tokeninfo(t_token *tokens);
+void print_nodeinfo(t_node *node);
+
 #endif

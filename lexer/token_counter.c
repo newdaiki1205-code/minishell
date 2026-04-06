@@ -16,13 +16,13 @@ int	token_count(char *str)
 {
 	int pos;
 	int num;
+	int unclosed;
 
 	pos = 0;
 	num = 0;
 	while (str[pos])
 	{
 		pos += rule_1(&str[pos]);
-		//printf("current_pos: %d\n", pos);
 		if (str[pos])
 			num++;
 		else
@@ -30,10 +30,19 @@ int	token_count(char *str)
 		if (str[pos] == '>' || str[pos] == '<' || str[pos] == '|')
 			pos += rule_2(&str[pos]);
 		else if (str[pos] == 34 || str[pos] == 39)
-			pos += rule_4(&str[pos]);
+		{
+			unclosed = rule_4(&str[pos]);
+			if(unclosed < 0)
+				return -1;
+			pos += unclosed;
+		}
 		else
-			pos += rule_5(&str[pos]);
-		//printf("before_space: %d\n", pos);
+		{
+			unclosed = rule_5(&str[pos]);
+			if(unclosed < 0)
+				return -1;
+			pos += unclosed;
+		}
 	}
 	return (num);
 }

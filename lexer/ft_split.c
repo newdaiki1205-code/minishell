@@ -23,6 +23,8 @@ char **ft_split(char *str)
         return NULL;
     size = token_count(str);
     printf("token: %d\n", size);
+    if(size < 0)
+        return (printf("error: unclosed quotation\n"), NULL);
     new = (char **)malloc(sizeof(char *) * (size + 1));
     if(!new)
         return NULL;
@@ -30,9 +32,7 @@ char **ft_split(char *str)
     pos = 0;
     while(i < size)
     {
-        // printf("current_pos: %d\n", pos);
         pos += rule_1(&str[pos]);
-        //printf("make unit:");
         new[i] = make_unit(&str[pos]);
         if(!new[i])
             return (free_str(new, i), NULL);

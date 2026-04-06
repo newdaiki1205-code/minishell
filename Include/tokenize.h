@@ -58,7 +58,6 @@ void				type_categorizer(t_token *token);
 void				quote_categorizer(t_token *token);
 void				token_add_back(t_token **head, t_token *new);
 
-void				print_tokeninfo(t_token *tokens);
 void				free_tokens(t_token *tokens);
 
 #endif

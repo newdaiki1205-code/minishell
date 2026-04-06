@@ -18,46 +18,59 @@
 typedef enum
 {
 	ND_PIPE,
-	ND_COMMAND,
-	ND_IO_RED,
-	ND_WORD
+	ND_COMMAND
 }					t_ntype;
 
-// typedef enum
-// {
-// 	ND_INPUT,
-// 	ND_OUTPUT,
-// 	ND_APPEND,
-// 	ND_HEREDOC
-// }					t_nred;
+typedef enum
+{
+	ND_INPUT,
+	ND_OUTPUT,
+	ND_APPEND,
+	ND_HEREDOC
+}					t_redtyp;
 
-// typedef enum
-// {
-// 	ND_DEF,
-// 	ND_SINGLE,
-// 	ND_DOUBLE
-// }					t_nquote;
+typedef enum
+{
+	ND_DEF,
+	ND_SINGLE,
+	ND_DOUBLE
+}					t_nquote;
+
+typedef struct s_nword
+{
+	char *val;
+	t_nquote q_state;
+	struct s_nword *next;
+}	t_nword;
+
+typedef struct s_nred
+{
+	t_redtyp type;
+	char *filename;
+}	t_nred;
 
 typedef struct s_node
 {
 	t_ntype			type;
 	struct s_node	*lhs;
 	struct s_node	*rhs;
-	char *val; // used only in WORD
-	//t_nred redirect; //used only token_type=RED
-	//t_nquote quote; //used only token_quote !=DEF
+	t_nword 	*args; //used only in WORD
+	t_nred	red; //used only in IO_RED
 }					t_node;
 
-t_node				*parser(t_token *tokens);
+t_node				*parser(t_token **tokens);
 
-t_node				*pipe_sequence(t_token *current);
-t_node				*command(t_token *current);
-t_node				*element(t_token *current);
+t_node				*pipe_sequence(t_token **current);
+t_node				*command(t_token **current);
+//t_node				*element(t_token *current);
 
 t_node				*new_node(t_ntype kind, t_node *lhs, t_node *rhs);
-t_node				*new_node_word(char *val);
-t_node				*new_node_redirect(char *val);
-bool				pipe_check(t_token *current);
-bool				command_check(t_token *current);
+bool	pipe_check(t_token **current);
+bool	command_check(t_token **current);
+int rd_handler(t_nred *node, t_token **current);
+t_node *new_node_command(t_token **current);
+t_nword *make_arg_list(t_nword **args, t_token *current);
+void quotation_handler(t_nword *new, t_token *current);
+
 
 #endif

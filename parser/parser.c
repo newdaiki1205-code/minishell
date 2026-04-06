@@ -12,13 +12,15 @@
 
 #include "parser.h"
 
-t_node	*parser(t_token *tokens)
+t_node	*parser(t_token **tokens)
 {
 	t_node *ret;
+	t_token *head = *tokens;
 
 	ret = pipe_sequence(tokens);
 	if (!ret)
 		return (NULL);
-	free_tokens(tokens);
+	free_tokens(head);
+	debug_parser(ret);
 	return (ret);
 }

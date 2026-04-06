@@ -28,15 +28,28 @@ int	main(void)
 		if (ft_strlen(input) > 0)
 			add_history(input);
 		splited = ft_split(input);
+		if(!splited)
+		{
+			free(input);
+			continue;
+		}
 		tokens = toknizer(tokens, splited);
 		if (!tokens)
-			return (free_split(splited), free(input), 1);
+		{
+			free_split(splited);
+			free(input);
+			continue;
+		}
 		print_tokeninfo(tokens);
-		ast = parser(tokens);
+		ast = parser(&tokens);
 		if (!ast)
-			return (free_tokens(tokens), free(input), 1);
+		{
+			free_tokens(tokens);
+			free(input);
+			continue;
+		}
 		free(input);
 	}
-	rl_clear_history();
+	clear_history();
 	return (0);
 }
