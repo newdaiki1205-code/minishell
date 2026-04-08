@@ -28,16 +28,13 @@ int	main(void)
 		if (ft_strlen(input) > 0)
 			add_history(input);
 		splited = ft_split(input);
+		free(input);
 		if(!splited)
-		{
-			free(input);
 			continue;
-		}
 		tokens = toknizer(tokens, splited);
 		if (!tokens)
 		{
 			free_split(splited);
-			free(input);
 			continue;
 		}
 		print_tokeninfo(tokens);
@@ -45,10 +42,8 @@ int	main(void)
 		if (!ast)
 		{
 			free_tokens(tokens);
-			free(input);
 			continue;
 		}
-		free(input);
 	}
 	clear_history();
 	return (0);

@@ -22,7 +22,11 @@ t_node	*pipe_sequence(t_token **current)
 	while (1)
 	{
 		if (pipe_check(current))
+		{
 			node = new_node(ND_PIPE, node, command(current));
+			if(!node->rhs)
+				return NULL;
+		}
 		else
 			return (node);
 	}

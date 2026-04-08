@@ -38,7 +38,7 @@ bool	pipe_check(t_token **current)
 		return false;
 	if((*current)->type != PIPE)
 		return false;
-	*current = (*current)->next;
+	*current = (*current)->next; //if it is NULL? readline?
 	return true;
 }
 
@@ -54,8 +54,10 @@ int rd_handler(t_nred *node, t_token **current)
 	else 
 		node->type = ND_HEREDOC;
 	*current = (*current)->next;
+	if(!*current)
+		return printf("minihsell: syntax error near unexpected token `newline'\n"), 1;
 	if((*current)->type != WORD)
-		return printf("syntax error near unexpected token '%s'\n", (*current)->value), 1;
+		return printf("minishell: syntax error near unexpected token '%s'\n", (*current)->value), 1;
 	node->filename = ft_strdup((*current)->value); //current->type != word return -1
 	if(!node->filename)
 		return 1;
@@ -65,8 +67,12 @@ int rd_handler(t_nred *node, t_token **current)
 
 t_node *new_node_command(t_token **current)
 {
-	t_node *node;
+	t_node *node; //if its NULL, readline -> toknize -> node?
 
+	if(!*current)
+		return printf("minishell: syntax error near unexpected token 'newline'\n"), NULL;
+	if(command_check(current))
+		return printf("minishell: syntax error near unexpected token '%s'\n", (*current)->value), NULL;
 	node = (t_node*)ft_calloc(1, sizeof(t_node));
 	if(!node)
 		return NULL;

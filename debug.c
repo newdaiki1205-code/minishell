@@ -15,14 +15,16 @@ void debug_parser(t_node *tree)
 
 void print_tokeninfo(t_token *tokens)
 {
-	while (tokens)
+	int i;
+    
+    i = 1;
+    while (tokens)
 	{
-        printf("Type: %d\n", tokens->type);
-		printf("Quote: %d\n", tokens->quote);
-		printf("Value: %s\n", tokens->value);
-		printf("\n");
+        printf("TOKEN %i: type=%d qupte=%d value=%s\n", i, tokens->type, tokens->quote, tokens->value);
+        i++;
 		tokens = tokens->next;
 	}
+    printf("\n");
 }
 
 void print_nodeinfo(t_node *node)

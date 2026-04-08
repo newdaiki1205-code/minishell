@@ -22,9 +22,11 @@ char **ft_split(char *str)
     if(!str)
         return NULL;
     size = token_count(str);
-    printf("token: %d\n", size);
+    printf("Num_of_Token: %d\n", size);
     if(size < 0)
-        return (printf("error: unclosed quotation\n"), NULL);
+        return (printf("minishell: quotation should be closed\n"), NULL);
+    if(size == 0)
+        return NULL; //need to fix?
     new = (char **)malloc(sizeof(char *) * (size + 1));
     if(!new)
         return NULL;
