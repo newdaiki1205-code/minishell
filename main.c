@@ -6,7 +6,7 @@
 /*   By: dshirais <dshirais@student.42vienna.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/30 20:30:03 by dshirais          #+#    #+#             */
-/*   Updated: 2026/04/03 15:59:58 by dshirais         ###   ########.fr       */
+/*   Updated: 2026/04/09 13:43:57 by dshirais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ int	main(void)
 			free_tokens(tokens);
 			continue;
 		}
+		free_parser(ast);
 	}
 	clear_history();
 	return (0);

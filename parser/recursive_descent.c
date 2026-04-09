@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   recursive-descent.c                                :+:      :+:    :+:   */
+/*   recursive_descent.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dshirais <dshirais@student.42vienna.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/03 13:36:23 by dshirais          #+#    #+#             */
-/*   Updated: 2026/04/03 15:09:42 by dshirais         ###   ########.fr       */
+/*   Updated: 2026/04/09 13:15:35 by dshirais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ t_node	*pipe_sequence(t_token **current)
 	{
 		if (pipe_check(current))
 		{
-			node = new_node(ND_PIPE, node, command(current));
+			node = new_node_pipe(ND_PIPE, node, command(current));
 			if(!node->rhs)
 				return NULL;
 		}
@@ -43,28 +43,3 @@ t_node	*command(t_token **current)
 	return node;
 }
 
-// t_node	*command(t_token *current)
-// {
-// 	t_node	*node;
-
-// 	node = element(current);
-// 	while (1)
-// 	{
-// 		if (command_check(current)) // return if pipe  & token->next != NULL
-// 			node = new_node(ND_COMMAND, node, element(current)); //problem: current is moved by command_check
-// 		else
-// 			return (node);
-// 	}
-// }
-
-// t_node	*element(t_token *current)
-// {
-// 	t_node *node;
-
-// 	if (current->type != WORD)
-// 		node = new_node_redirect(current);
-// 	else
-// 		node = new_node_word(current);
-// 	current = current->next;
-// 	return (node);
-// }

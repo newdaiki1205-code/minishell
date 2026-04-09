@@ -2,7 +2,7 @@ NAME = test
 
 SRC = main.c debug.c\
 	lexer/tokenize_utils.c lexer/token_rule.c lexer/token_counter.c lexer/ft_split.c lexer/toknizer.c ./libft/ft_strlen.c ./libft/ft_strdup.c \
-	parser/parser.c parser/parser_utils.c parser/recursive_descent.c libft/ft_calloc.c libft/ft_memset.c
+	parser/parser.c parser/parser_utils.c parser/recursive_descent.c parser/node_gen.c libft/ft_calloc.c libft/ft_memset.c
 OBJ = $(SRC:.c=.o)
 
 CC  = cc

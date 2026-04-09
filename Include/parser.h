@@ -6,7 +6,7 @@
 /*   By: dshirais <dshirais@student.42vienna.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/31 19:13:05 by dshirais          #+#    #+#             */
-/*   Updated: 2026/04/03 16:23:43 by dshirais         ###   ########.fr       */
+/*   Updated: 2026/04/09 13:41:47 by dshirais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,39 +38,40 @@ typedef enum
 
 typedef struct s_nword
 {
-	char *val;
-	t_nquote q_state;
-	struct s_nword *next;
-}	t_nword;
+	char			*val;
+	t_nquote		q_state;
+	struct s_nword	*next;
+}					t_nword;
 
 typedef struct s_nred
 {
-	t_redtyp type;
-	char *filename;
-}	t_nred;
+	t_redtyp		type;
+	char			*filename;
+}					t_nred;
 
 typedef struct s_node
 {
 	t_ntype			type;
 	struct s_node	*lhs;
 	struct s_node	*rhs;
-	t_nword 	*args; //used only in WORD
-	t_nred	red; //used only in IO_RED
+	t_nword *args; // used only in WORD
+	t_nred red;    // used only in IO_RED
 }					t_node;
 
 t_node				*parser(t_token **tokens);
 
 t_node				*pipe_sequence(t_token **current);
 t_node				*command(t_token **current);
-//t_node				*element(t_token *current);
+// t_node				*element(t_token *current);
 
-t_node				*new_node(t_ntype kind, t_node *lhs, t_node *rhs);
-bool	pipe_check(t_token **current);
-bool	command_check(t_token **current);
-int rd_handler(t_nred *node, t_token **current);
-t_node *new_node_command(t_token **current);
-t_nword *make_arg_list(t_nword **args, t_token *current);
-void quotation_handler(t_nword *new, t_token *current);
-
+t_node				*new_node_pipe(t_ntype kind, t_node *lhs, t_node *rhs);
+bool				pipe_check(t_token **current);
+bool				command_check(t_token **current);
+int					rd_handler(t_nred *node, t_token **current);
+t_node				*new_node_command(t_token **current);
+t_nword				*make_arg_list(t_nword **args, t_token *current);
+void				quotation_handler(t_nword *new, t_token *current);
+void				free_parser(t_node *tree);
+void				free_args(t_nword *args);
 
 #endif

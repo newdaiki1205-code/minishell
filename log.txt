@@ -2,6 +2,7 @@
 need to implement syntax error of pipe
 need to implement free node
 
+cc -Wall -Werror -Wextra ft_env.c libft/ft_calloc.c libft/ft_memcpy.c libft/ft_strlen.c libft/ft_strchr.c libft/ft_strdup.c libft/ft_memset.c -IInclude -o env
 
 valgrind --leak-check=full --show-leak-kinds=all ./lexer 
 ==734392== Memcheck, a memory error detector
