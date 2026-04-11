@@ -1,3 +1,68 @@
+11.04
+
+The simplest form for parameter expansion is: ${parameter}
+
+bash-3.2$ echo ${HOME}
+/Users/shiraishidaisei
+bash-3.2$ echo "${HOME}" //quotiation remove
+/Users/shiraishidaisei
+bash-3.2$ echo "$HOME" //quotation remove
+/Users/shiraishidaisei
+bash-3.2$ echo "${HOM}E" //HOM = null (because unset)
+E
+
+
+//If the parameter is not enclosed in braces, and is a name, the expansion shall use the longest valid name (see XBD Name), whether or not the variable represented by that name exists.
+
+bash-3.2$ echo "$HOME_test"
+
+bash-3.2$ echo "${HOME}_test"
+/Users/shiraishidaisei_test
+
+//Enclosing characters in single-quotes ( '' ) shall preserve the literal value of each character within the single-quotes. A single-quote cannot occur within single-quotes.
+bash-3.2$ echo '"${HOME}"'
+"${HOME}"
+bash-3.2$ echo '${HOME}'
+${HOME}
+
+
+//Enclosing characters in double-quotes ( "" ) shall preserve the literal value of all characters within the double-quotes
+bash-3.2$ echo "'${HOME}'"
+'/Users/shiraishidaisei'
+
+//The <dollar-sign> shall retain its special meaning introducing parameter expansion
+bash-3.2$ echo "${HOME}"
+/Users/shiraishidaisei
+
+If a parameter expansion occurs inside double-quotes: Field splitting shall not be performed on the results of the expansion.
+bash-3.2$ var="apple     orange"
+bash-3.2$ echo $var
+apple orange
+bash-3.2$ echo "$var"
+apple     orange
+
+
+//The '$' character is used to introduce parameter expansion. If an unquoted '$' is followed by a character that is not one of the following:
+
+A numeric character
+
+The name of one of the special parameters (see Special Parameters)
+
+A valid first character of a variable name
+
+A <left-curly-bracket> ( '{' )
+
+A <left-parenthesis>
+
+the result is unspecified. = $ should be followed by number, alphabet or {/(
+
+bash-3.2$ echo '$'
+$
+bash-3.2$ echo ''$''
+
+
+
+
 07.04
 need to implement syntax error of pipe
 need to implement free node
