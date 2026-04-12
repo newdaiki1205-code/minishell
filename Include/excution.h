@@ -1,34 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   excution.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dshirais <dshirais@student.42vienna.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/03/31 20:45:48 by dshirais          #+#    #+#             */
-/*   Updated: 2026/04/12 17:17:23 by dshirais         ###   ########.fr       */
+/*   Created: 2026/04/12 13:28:29 by dshirais          #+#    #+#             */
+/*   Updated: 2026/04/12 14:35:07 by dshirais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#include "minishell.h"
 
+#ifndef EXCUTION_H
+# define EXCUTION_H
 
-# include <readline/history.h>
-# include <readline/readline.h>
-# include <stdbool.h>
-# include <stdio.h>
-# include <stdlib.h>
+typedef struct s_env
+{
+    char *key;
+    char *value;
+    struct s_env *next;
+}   t_env;
 
-# include "../libft/libft.h"
-# include "tokenize.h"
-# include "parser.h"
-# include "excution.h"
-# include "expansion.h"
-
-
-void debug_parser(t_node *tree);
-void				print_tokeninfo(t_token *tokens);
-void print_nodeinfo(t_node *node);
+t_env *cp_env(char **env);
+t_env *make_new_list(t_env **head, char *env);
+int copy_keyvalue(t_env *new, char *src);
+char *key_is(char *src);
+char *value_is(char *src);
+void print_env(t_env* head);
+void free_env(t_env* head);
 
 #endif

@@ -1,28 +1,37 @@
 NAME = test
 
-SRC = main.c debug.c\
-	lexer/tokenize_utils.c lexer/token_rule.c lexer/token_counter.c lexer/ft_split.c lexer/toknizer.c ./libft/ft_strlen.c ./libft/ft_strdup.c \
-	parser/parser.c parser/parser_utils.c parser/recursive_descent.c parser/node_gen.c libft/ft_calloc.c libft/ft_memset.c
+SRC = main.c debug.c ft_env.c\
+	lexer/tokenize_utils.c lexer/token_rule.c lexer/token_counter.c lexer/input_split.c lexer/toknizer.c \
+	parser/parser.c parser/parser_utils.c parser/recursive_descent.c parser/node_gen.c \
+	expansion/expansion.c expansion/expansion_utils.c
 OBJ = $(SRC:.c=.o)
 
-CC  = cc
-FLAGS = -Wall -Werror -Wextra -g
+LIBFT       = libft/libft.a 
 
-LINK = -I./Include -lreadline
+INCLUDE = -I./Include 
+
+CC  = cc
+CFLAGS = -Wall -Werror -Wextra $(INCLUDE) -g
+LDFLAGS     = -lreadline -L./libft -lft 
 
 all: $(NAME)
 
-$(NAME): $(OBJ) 
-	$(CC) $(FLAGS) $(OBJ) $(LINK) -o $(NAME)
+$(NAME): $(OBJ) $(LIBFT)
+	$(CC) $(CFLAGS) $(OBJ) $(LDFLAGS) $(LINK) -o $(NAME)
+
+$(LIBFT):
+	make -C ./libft
 
 %.o: %.c
-	$(CC) $(FLAGS) -I./Include -c $< -o $@
+	$(CC) $(CFLAGS) -I./Include -c $< -o $@
 
 clean:
 	rm -f $(OBJ)
+	make -C ./libft clean
 
 fclean: clean
 	rm -f $(NAME)
+	make -C ./libft fclean
 
 re: fclean all
 

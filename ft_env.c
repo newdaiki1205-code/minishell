@@ -6,18 +6,11 @@
 /*   By: dshirais <dshirais@student.42vienna.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/09 14:24:38 by dshirais          #+#    #+#             */
-/*   Updated: 2026/04/09 16:24:17 by dshirais         ###   ########.fr       */
+/*   Updated: 2026/04/12 14:34:43 by dshirais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
-
-typedef struct s_env
-{
-    char *key;
-    char *value;
-    struct s_env *next;
-}   t_env;
+#include "excution.h"
 
 char *key_is(char *src)
 {
@@ -120,14 +113,32 @@ void print_env(t_env* head)
     }
 }
 
-int main (int ac, char **av, char **env)
+void free_env(t_env* head)
 {
-    t_env *head;
-
-    (void)ac;
-    (void)av;
+    t_env *tmp;
     
-    head = cp_env(env);
-    print_env(head);
-    return 0;
+    if(!head)
+		return;
+    while(head)
+    {
+        tmp = head->next;
+        if(head->key)
+            free(head->key);
+        if(head->value)
+            free(head->value);
+        free(head);
+        head = tmp;
+    }
 }
+
+// int main (int ac, char **av, char **env)
+// {
+//     t_env *head;
+
+//     (void)ac;
+//     (void)av;
+    
+//     head = cp_env(env);
+//     print_env(head);
+//     return 0;
+// }

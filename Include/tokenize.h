@@ -6,7 +6,7 @@
 /*   By: dshirais <dshirais@student.42vienna.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/23 15:02:16 by dshirais          #+#    #+#             */
-/*   Updated: 2026/03/31 20:47:30 by dshirais         ###   ########.fr       */
+/*   Updated: 2026/04/12 14:29:47 by dshirais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ typedef struct s_token
 	struct s_token	*next;
 }					t_token;
 
-char				**ft_split(char *str);
+char				**input_split(char *str);
 int					token_count(char *str);
 char				*make_unit(char *str);
 void				free_str(char **str, int i);

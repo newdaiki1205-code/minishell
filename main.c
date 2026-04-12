@@ -6,19 +6,24 @@
 /*   By: dshirais <dshirais@student.42vienna.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/30 20:30:03 by dshirais          #+#    #+#             */
-/*   Updated: 2026/04/09 13:43:57 by dshirais         ###   ########.fr       */
+/*   Updated: 2026/04/12 17:23:13 by dshirais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "tokenize.h"
+#include "minishell.h"
 
-int	main(void)
+int	main(int ac, char **av, char **env)
 {
 	char	*input;
 	char	**splited;
 	t_token	*tokens;
 	t_node	*ast;
+	t_env *env_cp;
 
+    (void)ac;
+    (void)av;
+
+	env_cp = cp_env(env);
 	while (1)
 	{
 		tokens = NULL;
@@ -27,7 +32,7 @@ int	main(void)
 			break ;
 		if (ft_strlen(input) > 0)
 			add_history(input);
-		splited = ft_split(input);
+		splited = input_split(input);
 		free(input);
 		if(!splited)
 			continue;
@@ -44,6 +49,9 @@ int	main(void)
 			free_tokens(tokens);
 			continue;
 		}
+		expansion(ast, env_cp);
+		printf("Aftre Expansion\n");
+		debug_parser(ast);
 		free_parser(ast);
 	}
 	clear_history();

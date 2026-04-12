@@ -6,13 +6,13 @@
 /*   By: dshirais <dshirais@student.42vienna.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/30 15:49:02 by dshirais          #+#    #+#             */
-/*   Updated: 2026/03/31 14:52:40 by dshirais         ###   ########.fr       */
+/*   Updated: 2026/04/12 14:08:41 by dshirais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "tokenize.h"
 
-char **ft_split(char *str)
+char **input_split(char *str)
 {
     char **new;
     int size;
