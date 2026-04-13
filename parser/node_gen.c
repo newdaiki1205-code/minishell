@@ -6,7 +6,7 @@
 /*   By: dshirais <dshirais@student.42vienna.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/09 13:16:14 by dshirais          #+#    #+#             */
-/*   Updated: 2026/04/09 13:18:03 by dshirais         ###   ########.fr       */
+/*   Updated: 2026/04/13 20:14:36 by dshirais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,12 +47,12 @@ t_node *new_node_command(t_token **current)
 	return node;
 }
 
-t_nword *make_arg_list(t_nword **args, t_token *current)
+t_narg *make_arg_list(t_narg **args, t_token *current)
 {
-	t_nword *new;
-	t_nword *tmp;
+	t_narg *new;
+	t_narg *tmp;
 
-	new = (t_nword*)ft_calloc(1, sizeof(t_nword));
+	new = (t_narg*)ft_calloc(1, sizeof(t_narg));
 	if(!new)
 		return NULL;
 	new->val = ft_strdup(current->value);
@@ -97,7 +97,7 @@ int rd_handler(t_nred *node, t_token **current)
 }
 
 
-void quotation_handler(t_nword *new, t_token *current)
+void quotation_handler(t_narg *new, t_token *current)
 {
 	if(current->quote == SINGLE)
 		new->q_state = ND_SINGLE;

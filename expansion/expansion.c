@@ -6,7 +6,7 @@
 /*   By: dshirais <dshirais@student.42vienna.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/12 13:22:34 by dshirais          #+#    #+#             */
-/*   Updated: 2026/04/12 17:31:22 by dshirais         ###   ########.fr       */
+/*   Updated: 2026/04/13 20:14:36 by dshirais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,9 @@ void	expansion(t_node *tree, t_env *env)
 		expansion(tree->rhs, env);
 }
 
-t_nword	*traverse_args(t_nword *args, t_env *env)
+t_narg	*traverse_args(t_narg *args, t_env *env)
 {
-	t_nword	*tmp;
+	t_narg	*tmp;
 
     tmp = args;
 	while (tmp)
@@ -58,9 +58,8 @@ char *expand_val(char *val, t_env *env)
     }
     else
         new = case_not_closed(val, env);
-    free(val);
     if(!new)
-        return NULL;
+        return free(val), NULL;
     return new;
 }
 
@@ -70,7 +69,6 @@ char *case_closed(char *val, t_env *env)
     char *search_key;
     char *re_enval;
     int cp_size;
-    size_t size;
     
     cp_size = ft_strchr(val, '}') - ft_strchr(val, '{') - 1;
     search_key = ft_strndup(ft_strchr(val, '{') + 1, cp_size);
@@ -79,53 +77,8 @@ char *case_closed(char *val, t_env *env)
     re_enval = search_env(env, search_key);
     if(!re_enval)
         return NULL;
-    size = ft_strlen(val) - (ft_strlen(search_key) + 3) + ft_strlen(re_enval);
-    new = make_new_str(val, search_key, re_enval, size);
+    new = make_new_str(val, search_key, re_enval);
     if(!new)
         return NULL;
     return new;
 }
-
-char *case_not_closed(char *val, t_env *env)
-{
-    (void)val;
-    (void)env;
-    return NULL;
-}
-
-char *make_new_str(char *src, char *enkey, char *enval, size_t size)
-{
-    char *new;
-    size_t i;
-    size_t j;
-    size_t key_size;
-    size_t val_size;    
-
-    new = (char*)ft_calloc(size + 1, sizeof(char));
-    if(!new)
-        return NULL;
-    i = 0;
-    j = 0;
-    key_size = ft_strlen(enkey);
-    val_size = ft_strlen(enval);
-    while(i < size)
-    {
-        if(src[i] == '$')
-        {
-            ft_memcpy(&new[i], enval, val_size);
-            i += val_size;
-            j = j + key_size + 3;
-        }
-        else
-        {
-            new[i] = src[j];
-            i++;
-            j++;
-        }
-    }
-    new[size] = '\0';
-    return new;
-}
-
-
-

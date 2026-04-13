@@ -6,7 +6,7 @@
 /*   By: dshirais <dshirais@student.42vienna.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/03 14:53:54 by dshirais          #+#    #+#             */
-/*   Updated: 2026/04/09 16:17:37 by dshirais         ###   ########.fr       */
+/*   Updated: 2026/04/13 20:14:36 by dshirais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,9 +45,9 @@ void free_parser(t_node *tree)
 	free(tree);
 }
 
-void free_args(t_nword *args)
+void free_args(t_narg *args)
 {
-	t_nword *tmp;
+	t_narg *tmp;
 	
 	if(!args || !(args->val))
 		return;

@@ -6,7 +6,7 @@
 /*   By: dshirais <dshirais@student.42vienna.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/23 15:02:16 by dshirais          #+#    #+#             */
-/*   Updated: 2026/04/12 14:29:47 by dshirais         ###   ########.fr       */
+/*   Updated: 2026/04/13 20:12:56 by dshirais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,20 @@ typedef struct s_token
 	struct s_token	*next;
 }					t_token;
 
+// typedef struct s_tklist
+// {
+// 	char *value;
+// 	t_quote quote;
+// 	struct s_list * next;
+// }	t_tklist;
+
+// typedef struct s_token
+// {
+// 	t_type			type;
+// 	t_tklist		tknode;
+// 	struct s_token	*next;
+// }					t_token;
+
 char				**input_split(char *str);
 int					token_count(char *str);
 char				*make_unit(char *str);
@@ -59,5 +73,6 @@ void				quote_categorizer(t_token *token);
 void				token_add_back(t_token **head, t_token *new);
 
 void				free_tokens(t_token *tokens);
+int					is_blank(char c);
 
 #endif

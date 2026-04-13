@@ -6,7 +6,7 @@
 /*   By: dshirais <dshirais@student.42vienna.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/30 19:07:20 by dshirais          #+#    #+#             */
-/*   Updated: 2026/03/31 15:00:07 by dshirais         ###   ########.fr       */
+/*   Updated: 2026/04/13 19:17:25 by dshirais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,3 +25,9 @@ void free_tokens(t_token *tokens)
 	}
 }
 
+int is_blank(char c)
+{
+	if(c == 9 || c == 32)
+		return 1;
+	return 0;
+}

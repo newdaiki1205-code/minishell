@@ -1,3 +1,10 @@
+13.04
+this is problem because if i handle quotation as a delimiter, my parser cannot differenciate these two command(both shoud be printed "hello world")
+dshirais@c2r2p7:~/Project_C/minishell/git$ echo hello world
+hello world
+dshirais@c2r2p7:~/Project_C/minishell/git$ echo "hello""world"
+helloworld
+
 11.04
 
 The simplest form for parameter expansion is: ${parameter}

@@ -6,7 +6,7 @@
 /*   By: dshirais <dshirais@student.42vienna.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/31 19:13:05 by dshirais          #+#    #+#             */
-/*   Updated: 2026/04/12 14:29:57 by dshirais         ###   ########.fr       */
+/*   Updated: 2026/04/13 20:18:47 by dshirais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,12 +36,25 @@ typedef enum
 	ND_DOUBLE
 }					t_nquote;
 
-typedef struct s_nword
+// typedef struct s_nword
+// {
+// 	char			*val;
+// 	t_nquote		q_state;
+// 	struct s_nword	*next;
+// }					t_nword;
+
+// typedef struct s_narg
+// {
+// 	t_nword			argument;
+// 	struct s_narg	*next;
+// }					t_narg;
+
+typedef struct s_narg
 {
 	char			*val;
 	t_nquote		q_state;
-	struct s_nword	*next;
-}					t_nword;
+	struct s_narg	*next;
+}					t_narg;
 
 typedef struct s_nred
 {
@@ -54,8 +67,8 @@ typedef struct s_node
 	t_ntype			type;
 	struct s_node	*lhs;
 	struct s_node	*rhs;
-	t_nword *args; // used only in WORD
-	t_nred red;    // used only in IO_RED
+	t_narg *args; // used only in WORD
+	t_nred red;   // used only in IO_RED
 }					t_node;
 
 t_node				*parser(t_token **tokens);
@@ -69,9 +82,9 @@ bool				pipe_check(t_token **current);
 bool				command_check(t_token **current);
 int					rd_handler(t_nred *node, t_token **current);
 t_node				*new_node_command(t_token **current);
-t_nword				*make_arg_list(t_nword **args, t_token *current);
-void				quotation_handler(t_nword *new, t_token *current);
+t_narg				*make_arg_list(t_narg **args, t_token *current);
+void				quotation_handler(t_narg *new, t_token *current);
 void				free_parser(t_node *tree);
-void				free_args(t_nword *args);
+void				free_args(t_narg *args);
 
 #endif
