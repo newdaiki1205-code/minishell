@@ -12,12 +12,12 @@
 
 #include "tokenize.h"
 
-t_token	*toknizer(t_token *head, char **splited)
+t_token	*toknizer(t_token *head, t_split *splited)
 {
 	int	i;
 
 	i = 0;
-	while (splited[i])
+	while (splited[i].val)
 	{
 		head = make_new_token(head, splited[i]);
 		if(!head)
@@ -28,16 +28,18 @@ t_token	*toknizer(t_token *head, char **splited)
 	return (head);
 }
 
-t_token	*make_new_token(t_token *head, char *value)
+t_token	*make_new_token(t_token *head, t_split elem)
 {
 	t_token	*new;
 
 	new = (t_token *)malloc(sizeof(t_token));
 	if (!new)
 		return (NULL);
-	new->value = ft_strdup(value);
+	new->value = ft_strdup(elem.val);
 	if (!new->value)
 		return (NULL);
+	if(elem.flag_cat)
+		new->flag_cat = 1;
 	type_categorizer(new);
 	quote_categorizer(new);
 	token_add_back(&head, new);

@@ -45,7 +45,6 @@ char *search_env(t_env *env, char *search_key)
             return tmp->value;
         tmp = tmp->next;
     }
-	printf("hihi\n");
     re = (char*)ft_calloc(1, sizeof(char));
     if(!re)
         return NULL;
@@ -88,6 +87,7 @@ char *make_new_str(char *src, char *enkey, char *enval)
             ft_memcpy(&new[i], enval, val_size);
             i += val_size;
             j = j + key_size + 3;
+            break;
         }
         else
         {
@@ -95,6 +95,12 @@ char *make_new_str(char *src, char *enkey, char *enval)
             i++;
             j++;
         }
+    }
+    while(i < size)
+    {
+        new[i] = src[j];
+        i++;
+        j++;
     }
     new[size] = '\0';
     return new;

@@ -20,7 +20,7 @@ void print_tokeninfo(t_token *tokens)
     i = 1;
     while (tokens)
 	{
-        printf("TOKEN %i: type=%d qupte=%d value=%s\n", i, tokens->type, tokens->quote, tokens->value);
+        printf("TOKEN %i: type=%d qupte=%d flag=%d, value=%s\n", i, tokens->type, tokens->quote, tokens->flag_cat, tokens->value);
         i++;
 		tokens = tokens->next;
 	}
@@ -38,7 +38,7 @@ void print_nodeinfo(t_node *node)
         }
         while(node->args)
 	    {
-            printf("%s(quotation_state: %i) ", node->args->val, node->args->q_state);
+            printf("%s(quotation_state: %i, flag=%i) ", node->args->val, node->args->q_state, node->args->flag_cat);
 		    node->args = node->args->next;
 	    }
         printf("\n");

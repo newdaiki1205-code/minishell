@@ -15,13 +15,14 @@
 int	main(int ac, char **av, char **env)
 {
 	char	*input;
-	char	**splited;
+	t_split	*splited;
 	t_token	*tokens;
 	t_node	*ast;
 	t_env *env_cp;
 
     (void)ac;
     (void)av;
+	(void)env;
 
 	env_cp = cp_env(env);
 	while (1)

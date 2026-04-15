@@ -15,6 +15,12 @@
 #ifndef TOKENIZE_H
 # define TOKENIZE_H
 
+typedef struct s_split
+{
+	char *val;
+	int flag_cat;
+} t_split;
+
 typedef enum e_type
 {
 	WORD,
@@ -37,6 +43,7 @@ typedef struct s_token
 	t_type			type;
 	char			*value;
 	t_quote			quote;
+	int flag_cat;
 	struct s_token	*next;
 }					t_token;
 
@@ -54,11 +61,15 @@ typedef struct s_token
 // 	struct s_token	*next;
 // }					t_token;
 
-char				**input_split(char *str);
+//char				**input_split(char *str);
+t_split *input_split(char *str);
 int					token_count(char *str);
-char				*make_unit(char *str);
-void				free_str(char **str, int i);
-void				free_split(char **tab);
+//char				*make_unit(char *str);
+t_split make_unit(char *str, int num);
+//void				free_str(char **str, int i);
+void free_str(t_split *elem, int i);
+//void				free_split(char **tab);
+void free_split(t_split *tab);
 
 int					rule_1(char *s);
 int					rule_2(char *s);
@@ -66,8 +77,10 @@ int					rule_3(char *s);
 int					rule_4(char *s);
 int					rule_5(char *s);
 
-t_token				*toknizer(t_token *head, char **splited);
-t_token				*make_new_token(t_token *head, char *value);
+//t_token				*toknizer(t_token *head, char **splited);
+t_token	*toknizer(t_token *head, t_split *splited);
+//t_token				*make_new_token(t_token *head, char *value);
+t_token	*make_new_token(t_token *head, t_split elem);
 void				type_categorizer(t_token *token);
 void				quote_categorizer(t_token *token);
 void				token_add_back(t_token **head, t_token *new);

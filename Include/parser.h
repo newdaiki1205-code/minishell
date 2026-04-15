@@ -53,6 +53,7 @@ typedef struct s_narg
 {
 	char			*val;
 	t_nquote		q_state;
+	int flag_cat;
 	struct s_narg	*next;
 }					t_narg;
 

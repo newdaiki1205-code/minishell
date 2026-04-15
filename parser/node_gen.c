@@ -57,6 +57,9 @@ t_narg *make_arg_list(t_narg **args, t_token *current)
 		return NULL;
 	new->val = ft_strdup(current->value);
 	quotation_handler(new, current);
+	new->flag_cat = 0;
+	if(current->flag_cat)
+		new->flag_cat = 1;
 	if(!*args)
 	{
 		*args = new;

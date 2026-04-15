@@ -12,7 +12,7 @@
 
 #include "excution.h"
 
-char *case_not_closed(char *val, t_env *env)
+char *case_not_closed(char *val, t_env *env, size_t *ex_len)
 {
     char *new;
     char *search_key;
@@ -21,7 +21,11 @@ char *case_not_closed(char *val, t_env *env)
     
     key_size = is_valid_name(ft_strchr(val, '$') + 1);
     if(!key_size)
-        return val;
+    {
+        new = ft_strdup(val);
+        free(val);
+        return new;
+    }
     search_key = ft_strndup(ft_strchr(val, '$') + 1, key_size);
     if(!search_key)
         return NULL;
@@ -34,6 +38,8 @@ char *case_not_closed(char *val, t_env *env)
         new = make_new_ncstr(val, search_key, re_enval);
     if(!new)
         return NULL;
+    *ex_len = ft_strlen(re_enval);
+    free(val);
     return new;
 }
 
@@ -120,6 +126,7 @@ char *make_new_ncstr(char *src, char *enkey, char *enval)
             ft_memcpy(&new[i], enval, val_size);
             i += val_size;
             j = j + key_size + 1;
+            break;
         }
         else
         {
@@ -127,6 +134,12 @@ char *make_new_ncstr(char *src, char *enkey, char *enval)
             i++;
             j++;
         }
+    }
+    while(i < size)
+    {
+        new[i] = src[j];
+        i++;
+        j++;
     }
     new[size] = '\0';
     return new;

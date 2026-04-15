@@ -73,7 +73,7 @@ echo $_HOME hi
 hi
 bash-3.2$ echo '$'
 $
-bash-3.2$ echo ''$''
+bash-3.2$ echo ''$'' //ANSI-C quoting, so ignore? because its not single/double quoting
 
 //In the shell command language, 
 a word consisting solely of underscores, digits, and alphabetics from the portable character set. The first character of a name is not a digit.
