@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_split.c                                         :+:      :+:    :+:   */
+/*   input_split.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dshirais <dshirais@student.42vienna.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/30 15:49:02 by dshirais          #+#    #+#             */
-/*   Updated: 2026/04/12 14:08:41 by dshirais         ###   ########.fr       */
+/*   Updated: 2026/04/15 20:26:58 by dshirais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ t_split *input_split(char *str)
         pos += (rule_1(&str[pos]) + ft_strlen(new[i].val));
         i++;
     }
+    new[i].val = NULL;
     return (new);
 }
 
@@ -84,7 +85,7 @@ void free_split(t_split *tab)
     int i;
     
     i = 0;
-	while (tab && tab->val[i])
+	while (tab && tab[i].val)
 	{
 		free(tab[i].val);
 		i++;

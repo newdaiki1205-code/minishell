@@ -33,6 +33,7 @@ SRC = ft_atoi.c \
 	ft_substr.c \
 	ft_tolower.c \
 	ft_toupper.c \
+	ft_split.c
 	
 BNS = ft_lstnew.c \
 	ft_lstadd_front.c \

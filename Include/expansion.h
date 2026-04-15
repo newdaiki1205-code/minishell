@@ -6,7 +6,7 @@
 /*   By: dshirais <dshirais@student.42vienna.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/12 13:22:58 by dshirais          #+#    #+#             */
-/*   Updated: 2026/04/13 20:23:41 by dshirais         ###   ########.fr       */
+/*   Updated: 2026/04/15 19:28:06 by dshirais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,11 @@ int name_check(char c);
 char *mod_str(char *src, char *enkey);
 char *make_new_ncstr(char *src, char *enkey, char *enval);
 
-char *field_splitiing(char *src);
+//char *field_splitiing(char *src);
+t_narg *field_splitiing(t_narg *src);
+t_narg *expand_list(t_narg *src, char **tab, int size);
+t_narg *gen_expanded_arg(char *str);
+int is_IFS(char* str);
 
 char	*ft_strnjoin(char *s1, char *s2, size_t size);
 

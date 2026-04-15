@@ -6,7 +6,7 @@
 /*   By: dshirais <dshirais@student.42vienna.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/30 20:36:08 by dshirais          #+#    #+#             */
-/*   Updated: 2026/04/03 15:59:05 by dshirais         ###   ########.fr       */
+/*   Updated: 2026/04/15 20:31:46 by dshirais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,8 @@ t_token	*make_new_token(t_token *head, t_split elem)
 		return (NULL);
 	if(elem.flag_cat)
 		new->flag_cat = 1;
+	else
+		new->flag_cat = 0;
 	type_categorizer(new);
 	quote_categorizer(new);
 	token_add_back(&head, new);

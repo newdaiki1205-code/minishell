@@ -1,0 +1,73 @@
+c2r3p8% valgrind --leak-check=full ./test  
+==576041== Memcheck, a memory error detector
+==576041== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==576041== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
+==576041== Command: ./test
+==576041== 
+minishell$ echo $TEST
+Num_of_Token: 2
+TOKEN 1: type=0 qupte=0 flag=0, value=echo
+TOKEN 2: type=0 qupte=0 flag=0, value=$TEST
+
+Aftre Expansion
+ND_COMMAND:echo(quotation_state: 0, flag=0) apple(quotation_state: 0, flag=0) orange(quotation_state: 0, flag=0) 
+minishell$ 
+==576041== 
+==576041== HEAP SUMMARY:
+==576041==     in use at exit: 212,635 bytes in 428 blocks
+==576041==   total heap usage: 653 allocs, 225 frees, 233,362 bytes allocated
+==576041== 
+==576041== 1 bytes in 1 blocks are definitely lost in loss record 1 of 77
+==576041==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==576041==    by 0x4042D1: ft_strdup (in /home/dshirais/Project_C/minishell/git/test)
+==576041==    by 0x40312D: expand_val (expansion.c:87)
+==576041==    by 0x402EA9: traverse_args (expansion.c:35)
+==576041==    by 0x402E0D: expansion (expansion.c:20)
+==576041==    by 0x401279: main (main.c:53)
+==576041== 
+==576041== 5 bytes in 1 blocks are definitely lost in loss record 3 of 77
+==576041==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==576041==    by 0x4033C7: ft_strndup (expansion_utils.c:24)
+==576041==    by 0x4037CA: case_not_closed (case_not_closed.c:29)
+==576041==    by 0x403033: expand_val (expansion.c:72)
+==576041==    by 0x402EA9: traverse_args (expansion.c:35)
+==576041==    by 0x402E0D: expansion (expansion.c:20)
+==576041==    by 0x401279: main (main.c:53)
+==576041== 
+==576041== 37 (24 direct, 13 indirect) bytes in 1 blocks are definitely lost in loss record 21 of 77
+==576041==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==576041==    by 0x4046F8: ft_split (in /home/dshirais/Project_C/minishell/git/test)
+==576041==    by 0x403CCC: field_splitiing (field_spliting.c:10)
+==576041==    by 0x402EE5: traverse_args (expansion.c:39)
+==576041==    by 0x402E0D: expansion (expansion.c:20)
+==576041==    by 0x401279: main (main.c:53)
+==576041== 
+==576041== 90 (24 direct, 66 indirect) bytes in 1 blocks are definitely lost in loss record 26 of 77
+==576041==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==576041==    by 0x403FFC: ft_calloc (in /home/dshirais/Project_C/minishell/git/test)
+==576041==    by 0x402C6E: make_arg_list (node_gen.c:55)
+==576041==    by 0x402AC9: new_node_command (node_gen.c:44)
+==576041==    by 0x402904: command (recursive_descent.c:40)
+==576041==    by 0x402854: pipe_sequence (recursive_descent.c:19)
+==576041==    by 0x40263F: parser (parser.c:20)
+==576041==    by 0x40124F: main (main.c:47)
+==576041== 
+==576041== 4,321 (24 direct, 4,297 indirect) bytes in 1 blocks are definitely lost in loss record 63 of 77
+==576041==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==576041==    by 0x403FFC: ft_calloc (in /home/dshirais/Project_C/minishell/git/test)
+==576041==    by 0x4016BE: make_new_list (ft_env.c:71)
+==576041==    by 0x4017CA: cp_env (ft_env.c:99)
+==576041==    by 0x4011A2: main (main.c:27)
+==576041== 
+==576041== LEAK SUMMARY:
+==576041==    definitely lost: 78 bytes in 5 blocks
+==576041==    indirectly lost: 4,376 bytes in 201 blocks
+==576041==      possibly lost: 0 bytes in 0 blocks
+==576041==    still reachable: 208,181 bytes in 222 blocks
+==576041==         suppressed: 0 bytes in 0 blocks
+==576041== Reachable blocks (those to which a pointer was found) are not shown.
+==576041== To see them, rerun with: --leak-check=full --show-leak-kinds=all
+==576041== 
+==576041== For lists of detected and suppressed errors, rerun with: -s
+==576041== ERROR SUMMARY: 5 errors from 5 contexts (suppressed: 0 from 0)
+c2r3p8% 

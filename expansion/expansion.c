@@ -6,7 +6,7 @@
 /*   By: dshirais <dshirais@student.42vienna.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/12 13:22:34 by dshirais          #+#    #+#             */
-/*   Updated: 2026/04/13 20:14:36 by dshirais         ###   ########.fr       */
+/*   Updated: 2026/04/15 20:40:08 by dshirais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,8 @@ t_narg	*traverse_args(t_narg *args, t_env *env)
 			tmp->val = expand_val(tmp->val, env);
 			if (!tmp->val)
 				return (NULL);
-            // if(tmp->q_state == ND_DEF)
-            //     tmp = field_splitiing(tmp);
+            if(tmp->q_state == ND_DEF)
+                tmp = field_splitiing(tmp);
 		}
         tmp = tmp->next;
 	}
@@ -87,6 +87,7 @@ char *expand_val(char *val, t_env *env)
         val = ft_strdup(new + pos + ex_len);
         free(new);
     }
+    free(val);
     return re;
 }
 
