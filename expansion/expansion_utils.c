@@ -6,7 +6,7 @@
 /*   By: dshirais <dshirais@student.42vienna.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/12 16:29:56 by dshirais          #+#    #+#             */
-/*   Updated: 2026/04/13 18:22:50 by dshirais         ###   ########.fr       */
+/*   Updated: 2026/04/16 15:01:19 by dshirais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,8 @@ char *make_new_str(char *src, char *enkey, char *enval)
     size_t key_size;
     size_t val_size;    
 
-	size = ft_strlen(src) - (ft_strlen(enkey) + 1) + ft_strlen(enval);
+	// size = ft_strlen(src) - (ft_strlen(enkey) + 1) + ft_strlen(enval);
+    size = ft_strlen(src) - (ft_strlen(enkey) + 3) + ft_strlen(enval);
     new = (char*)ft_calloc(size + 1, sizeof(char));
     if(!new)
         return NULL;

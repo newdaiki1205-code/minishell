@@ -6,7 +6,7 @@
 /*   By: dshirais <dshirais@student.42vienna.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/30 20:30:03 by dshirais          #+#    #+#             */
-/*   Updated: 2026/04/15 19:38:27 by dshirais         ###   ########.fr       */
+/*   Updated: 2026/04/16 14:45:30 by dshirais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	main(int ac, char **av, char **env)
 
     (void)ac;
     (void)av;
-	(void)env;
+	//(void)env;
 
 	env_cp = cp_env(env);
 	while (1)
