@@ -6,7 +6,7 @@
 /*   By: dshirais <dshirais@student.42vienna.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/12 13:22:34 by dshirais          #+#    #+#             */
-/*   Updated: 2026/04/15 20:40:08 by dshirais         ###   ########.fr       */
+/*   Updated: 2026/04/16 14:59:10 by dshirais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,9 +72,10 @@ char *expand_val(char *val, t_env *env)
             new = case_not_closed(val, env, &ex_len);
         if(!new)
             return free(val), NULL;
-        if(!ex_len)
+        if(!ex_len) 
         {
-            ex_len++;
+            if(*new)
+                ex_len++;
             while(new[ex_len] && new[ex_len] != '$')
                 ex_len++;
         }
