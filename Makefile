@@ -3,7 +3,7 @@ NAME = test
 SRC = main.c debug.c ft_env.c\
 	lexer/tokenize_utils.c lexer/token_rule.c lexer/token_counter.c lexer/input_split.c lexer/toknizer.c \
 	parser/parser.c parser/parser_utils.c parser/recursive_descent.c parser/node_gen.c \
-	expansion/expansion.c expansion/expansion_utils.c expansion/case_not_closed.c expansion/field_spliting.c
+	expansion/expansion.c expansion/expansion_utils.c expansion/case_not_closed.c expansion/field_spliting.c expansion/fsp_utils.c
 OBJ = $(SRC:.c=.o)
 
 LIBFT       = libft/libft.a 

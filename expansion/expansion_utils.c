@@ -42,7 +42,10 @@ char *search_env(t_env *env, char *search_key)
     while(tmp)
     {
         if(!ft_strcmp(tmp->key, search_key))
-            return tmp->value;
+        {
+            re = ft_strdup(tmp->value);
+            return re;
+        }
         tmp = tmp->next;
     }
     re = (char*)ft_calloc(1, sizeof(char));

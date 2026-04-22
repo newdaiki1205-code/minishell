@@ -6,7 +6,7 @@
 /*   By: dshirais <dshirais@student.42vienna.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/12 13:22:58 by dshirais          #+#    #+#             */
-/*   Updated: 2026/04/15 19:28:06 by dshirais         ###   ########.fr       */
+/*   Updated: 2026/04/21 20:04:40 by dshirais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,34 +15,49 @@
 #ifndef EXPANSION_H
 # define EXPANSION_H
 
-void	expansion(t_node *tree, t_env *env);
+void	expansion(t_node *tree, t_env *env, int exit_status);
 
-t_narg	*traverse_args(t_narg *args, t_env *env);
-char *expand_val(char *val, t_env *env);
-//char *case_closed(char *val, t_env *env);
-char *case_closed(char *val, t_env *env, size_t *ex_len);
+t_narg	*traverse_args(t_narg *args, t_env *env, int exit_status);
+// char	*expand_val(char *val, t_env *env);
+char	*expand_val(t_narg *node, t_env *env, int exit_status);
+// char *case_closed(char *val, t_env *env);
+//char	*case_closed(char *val, t_env *env, size_t *ex_len);
+char	*case_closed(char *val, t_env *env, size_t *ex_len, int exit_status);
 
-
-
-char *search_env(t_env *env, char *search_key);
+char	*search_env(t_env *env, char *search_key);
 char	*ft_strndup(const char *s, int size);
-char *make_new_str(char *src, char *enkey, char *enval);
-int	ft_strcmp(const char *s1, const char *s2);
+char	*make_new_str(char *src, char *enkey, char *enval);
+int		ft_strcmp(const char *s1, const char *s2);
 
-//char *case_not_closed(char *val, t_env *env);
-char *case_not_closed(char *val, t_env *env, size_t *ex_len);
-int is_underscores(char c);
-int is_valid_name(char *str);
-int name_check(char c);
-char *mod_str(char *src, char *enkey);
-char *make_new_ncstr(char *src, char *enkey, char *enval);
+// char *case_not_closed(char *val, t_env *env);
+//char	*case_not_closed(char *val, t_env *env, size_t *ex_len);
+char *case_not_closed(char *val, t_env *env, size_t *ex_len, int exit_status);
+int		is_underscores(char c);
+int		is_valid_name(char *str);
+int		name_check(char c);
+char	*mod_str(char *src, char *enkey);
+char	*make_new_ncstr(char *src, char *enkey, char *enval);
 
-//char *field_splitiing(char *src);
-t_narg *field_splitiing(t_narg *src);
-t_narg *expand_list(t_narg *src, char **tab, int size);
-t_narg *gen_expanded_arg(char *str);
-int is_IFS(char* str);
+// char *field_splitiing(char *src);
+t_narg	*field_splitiing(t_narg *src, t_env *env);
+t_narg	*expand_list(t_narg *src, char **tab, int size);
+t_narg	*gen_expanded_arg(char *str);
+int		is_IFS(char *str);
+
+char	**ifs_split(char *src, char *ifs);
+void	free_string(char **str, int i);
+char	*unit_gen(char *str, char *ifs);
+int		ifs_count(char *str, char *ifs);
+char	*trim_str(char *str, char *ifs);
+void	free_tab(char **tab);
+
+char	*quote_remove(t_narg *node);
+
+void	arg_concat(t_narg *head);
+void	restructure_list(t_narg *current, t_narg *next);
 
 char	*ft_strnjoin(char *s1, char *s2, size_t size);
+
+int is_exit_expand(char *val);
 
 #endif

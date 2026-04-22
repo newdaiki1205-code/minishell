@@ -1,3 +1,116 @@
+21.04
+minishell$ echo hello$?hi
+Num_of_Token: 2
+TOKEN 1: type=0 qupte=0 flag=0, value=echo
+TOKEN 2: type=0 qupte=0 flag=0, value=hello$?hi
+
+Before Expansion
+ND_COMMAND:echo(quotation_state: 0, flag=0) hello$?hi(quotation_state: 0, flag=0) 
+
+new:hello0hi ex_len:1
+after expand_val: hello0
+Aftre Expansion
+ND_COMMAND:echo(quotation_state: 0, flag=0) hello0(quotation_state: 0, flag=0) 
+
+minishell$ echo hello${?}hi
+Num_of_Token: 2
+TOKEN 1: type=0 qupte=0 flag=0, value=echo
+TOKEN 2: type=0 qupte=0 flag=0, value=hello${?}hi
+
+Before Expansion
+ND_COMMAND:echo(quotation_state: 0, flag=0) hello${?}hi(quotation_state: 0, flag=0) 
+
+new:hello0hi ex_len:1
+after expand_val: hello0
+Aftre Expansion
+ND_COMMAND:echo(quotation_state: 0, flag=0) hello0(quotation_state: 0, flag=0) 
+
+minishell$ echo hello$HOMEhi
+Num_of_Token: 2
+TOKEN 1: type=0 qupte=0 flag=0, value=echo
+TOKEN 2: type=0 qupte=0 flag=0, value=hello$HOMEhi
+
+Before Expansion
+ND_COMMAND:echo(quotation_state: 0, flag=0) hello$HOMEhi(quotation_state: 0, flag=0) 
+
+new:hello ex_len:0
+after expand_val: hello
+Aftre Expansion
+ND_COMMAND:echo(quotation_state: 0, flag=0) hello(quotation_state: 0, flag=0) 
+
+minishell$ echo "$HOME $HOME" //when cp_len = ft_strlen(new)
+Num_of_Token: 2
+TOKEN 1: type=0 qupte=0 flag=0, value=echo
+TOKEN 2: type=0 qupte=2 flag=0, value="$HOME $HOME"
+
+Before Expansion
+ND_COMMAND:echo(quotation_state: 0, flag=0) "$HOME $HOME"(quotation_state: 2, flag=0) 
+
+new:"/home/dshirais $HOME" ex_len:14
+ex_len: 14
+after expand_val: "/home/dshirais $HOME"
+Aftre Expansion
+ND_COMMAND:echo(quotation_state: 0, flag=0) /home/dshirais $HOME(quotation_state: 2, flag=0) 
+
+minishell$ "'$HOME' $HOME" //the following is when cp_len with if sentence
+Num_of_Token: 1
+TOKEN 1: type=0 qupte=2 flag=0, value="'$HOME' $HOME"
+
+Before Expansion
+ND_COMMAND:"'$HOME' $HOME"(quotation_state: 2, flag=0) 
+
+new:"'/home/dshirais' $HOME" ex_len:14
+ex_len: 14
+new: /home/dshirais" ex_len:14
+ex_len: 14
+after expand_val: "'/home/dshirais' /home/dshirais"
+Aftre Expansion
+ND_COMMAND:'/home/dshirais' /home/dshirais(quotation_state: 2, flag=0) 
+
+minishell$ "'$HOME'"
+Num_of_Token: 1
+TOKEN 1: type=0 qupte=2 flag=0, value="'$HOME'"
+
+Before Expansion
+ND_COMMAND:"'$HOME'"(quotation_state: 2, flag=0) 
+
+new:"'/home/dshirais'" ex_len:14
+ex_len: 14
+after expand_val: "'/home/dshirais'
+Aftre Expansion
+ND_COMMAND:'/home/dshirais(quotation_state: 2, flag=0) 
+
+minishell$ 
+
+minishell$ "'$HOME'hi"
+Num_of_Token: 1
+TOKEN 1: type=0 qupte=2 flag=0, value="'$HOME'hi"
+
+Before Expansion
+ND_COMMAND:"'$HOME'hi"(quotation_state: 2, flag=0) 
+
+new:"'/home/dshirais'hi" ex_len:14
+ex_len: 14
+after expand_val: "'/home/dshirais'
+Aftre Expansion
+ND_COMMAND:'/home/dshirais(quotation_state: 2, flag=0) 
+
+minishell$ "${HOME}hi"
+Num_of_Token: 1
+TOKEN 1: type=0 qupte=2 flag=0, value="${HOME}hi"
+
+Before Expansion
+ND_COMMAND:"${HOME}hi"(quotation_state: 2, flag=0) 
+
+new:"/home/dshiraishi" ex_len:14
+ex_len: 14
+after expand_val: "/home/dshiraish
+Aftre Expansion
+ND_COMMAND:/home/dshirais(quotation_state: 2, flag=0) 
+
+16.04
+cc -Wall -Werror -Wextra -g expansion/fsp_utils.c expansion/expansion_utils.c -I./Include libft/libft.a
+
 13.04
 this is problem because if i handle quotation as a delimiter, my parser cannot differenciate these two command(both shoud be printed "hello world")
 dshirais@c2r2p7:~/Project_C/minishell/git$ echo hello world

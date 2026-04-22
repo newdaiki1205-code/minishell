@@ -6,98 +6,197 @@
 /*   By: dshirais <dshirais@student.42vienna.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/12 13:22:34 by dshirais          #+#    #+#             */
-/*   Updated: 2026/04/16 14:59:10 by dshirais         ###   ########.fr       */
+/*   Updated: 2026/04/21 22:08:17 by dshirais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "expansion.h"
 
-void	expansion(t_node *tree, t_env *env)
+void	expansion(t_node *tree, t_env *env, int exit_status)
 {
 	if (tree->lhs)
-		expansion(tree->lhs, env);
+		expansion(tree->lhs, env, exit_status);
 	if (tree->type == ND_COMMAND)
-		tree->args = traverse_args(tree->args, env);
+		tree->args = traverse_args(tree->args, env, exit_status);
 	if (tree->rhs)
-		expansion(tree->rhs, env);
+		expansion(tree->rhs, env, exit_status);
 }
 
-t_narg	*traverse_args(t_narg *args, t_env *env)
+t_narg	*traverse_args(t_narg *args, t_env *env, int exit_status)
 {
 	t_narg	*tmp;
 
-    tmp = args;
+	tmp = args;
 	while (tmp)
 	{
 		if ((tmp->q_state == ND_DEF || tmp->q_state == ND_DOUBLE)
 			&& ft_strchr(tmp->val, '$'))
 		{
-			tmp->val = expand_val(tmp->val, env);
+			tmp->val = expand_val(tmp, env, exit_status);
 			if (!tmp->val)
 				return (NULL);
-            if(tmp->q_state == ND_DEF)
-                tmp = field_splitiing(tmp);
+            printf("after expand_val: %s\n", tmp->val);
+			if (tmp->q_state == ND_DEF)
+				tmp = field_splitiing(tmp, env);
+			if (!tmp)
+				return (NULL);
 		}
-        tmp = tmp->next;
+        if (tmp->q_state != ND_DEF)
+			tmp->val = quote_remove(tmp);
+		if (!tmp->val)
+			return (NULL);
+		tmp = tmp->next;
 	}
-    return args;
+    tmp = args;
+    arg_concat(tmp);
+	return (args);
 }
 
-
-char *expand_val(char *val, t_env *env)
+char	*quote_remove(t_narg *node)
 {
-    char *doller_pos;
-    char *new;
-    char *re;
-    size_t ex_len;
-    size_t pos;
+	char	*new;
+	size_t	size;
+	size_t	content;
+	size_t	q_start;
+	char	quot;
 
-    re = NULL;
-    while(ft_strchr(val, '$'))
-    {
-        ex_len = 0;
-        pos = 0;
-        doller_pos = ft_strchr(val, '$');
-        while(val[pos] && val[pos] != '$')
-            pos++;
-        // if(*(doller_pos + 1) == '?') //need to ask Nur san
-        //     return print_endval();
-        if(*(doller_pos + 1) == '{')
-        {
-            if(!ft_strchr(val, '}'))
-                return printf("bad substitution\n"), NULL; 
-            new = case_closed(val, env, &ex_len);   
-        }
-        else
-            new = case_not_closed(val, env, &ex_len);
-        if(!new)
-            return free(val), NULL;
-        if(!ex_len) 
-        {
-            if(*new)
-                ex_len++;
-            while(new[ex_len] && new[ex_len] != '$')
-                ex_len++;
-        }
-        if(!re)
-            re = ft_strndup(new, pos + ex_len);
-        else
-            re = ft_strnjoin(re, new, pos + ex_len);
-        if(!re)
-            return NULL;
-        val = ft_strdup(new + pos + ex_len);
-        free(new);
-    }
-    free(val);
-    return re;
+    size = ft_strlen(node->val) - 2;
+	if (node->q_state == ND_DOUBLE)
+		quot = 34;
+	else
+		quot = 39;
+	q_start = 0;
+	while (node->val[q_start] && node->val[q_start] != quot)
+		q_start++;
+	content = ft_strlen(node->val) - (q_start + 1) - 1;
+	new = (char *)ft_calloc(size + 1, sizeof(char));
+	if (!new)
+		return (NULL);
+	ft_memcpy(new, node->val, q_start);
+	ft_memcpy(&new[q_start], &node->val[q_start + 1], content);
+	//new[size] = '\0';
+	free(node->val);
+	return (new);
 }
+
+void arg_concat(t_narg *head)
+{
+    t_narg *current;
+    t_narg *next;
+    char *new;
+
+    current = head;
+    while(current->next)
+    {
+        next = current->next;
+        if(current->next && next->flag_cat)
+        {
+            new = ft_strjoin(current->val, next->val);
+            free(current->val);
+            current->val = new;
+            restructure_list(current, next);
+        }
+        next = current->next;
+        if(current->next && !next->flag_cat)
+            current = current->next;
+    }
+}
+
+void restructure_list(t_narg *current, t_narg *next)
+{
+    t_narg *tmp;
+
+    tmp = next->next;
+    free(next->val);
+    free(next);
+    current->next = tmp;
+}
+
+
+char	*expand_val(t_narg *node, t_env *env, int exit_status)
+{
+	char	*doller_pos;
+	char	*new;
+	char	*re;
+	size_t	ex_len;
+	size_t	pos;
+	size_t	copy_len;
+
+	re = NULL;
+	//while (ft_strchr(node->val, '$'))
+    while(*node->val)
+	{
+		ex_len = 0;
+		pos = 0;
+		doller_pos = ft_strchr(node->val, '$');
+        if(doller_pos)
+        {
+            while (node->val[pos] && node->val[pos] != '$')
+			pos++;
+        }
+		// if(*(doller_pos + 1) == '?' || !ft_strncmp("${?}", &node->val[pos], 4)) 
+		//     return (ft_itoa(exit_status));
+		if(!doller_pos)
+        {
+            new = node->val;
+        }
+        else if (*(doller_pos + 1) == '{')
+		{
+			if (!ft_strchr(node->val, '}'))
+				return (printf("bad substitution\n"), NULL);
+			new = case_closed(node->val, env, &ex_len, exit_status);
+		}
+		else
+			new = case_not_closed(node->val, env, &ex_len, exit_status);
+		if (!new)
+			return (free(node->val), NULL);
+        printf("new:%s ex_len:%zu\n", new, ex_len);
+		if (!ex_len)
+		{
+			if (node->q_state != ND_DEF && ft_strlen(new) == 2)
+                copy_len = 2;
+            else if (*new)
+            {
+                ex_len++;
+			    while (new[ex_len] && new[ex_len] != '$')
+			    	ex_len++;
+                copy_len = ex_len;
+            }
+            else
+                copy_len = ex_len;
+		}
+		// if (node->q_state != ND_DEF)
+        // {
+        //     //copy_len = ft_strlen(new);
+        //     if(ft_strlen(new) == 2)
+        //         copy_len = 2;
+        //     else
+        //         copy_len = pos + ex_len;
+        // }
+		else
+			copy_len = pos + ex_len;
+        printf("ex_len: %zu\n", ex_len);
+		if (!re)
+			re = ft_strndup(new, copy_len);
+		else
+			re = ft_strnjoin(re, new, copy_len);
+		if (!re)
+			return (NULL);
+		node->val = ft_strdup(new + copy_len);
+        printf("%s\n", node->val);
+		free(new);
+	}
+	free(node->val);
+	return (re);
+}
+
 
 char	*ft_strnjoin(char *s1, char *s2, size_t size)
 {
 	size_t	sum;
 	char	*str;
 	size_t	i;
-    size_t  j;
+	size_t	j;
 
 	if (!s1 || !s2)
 		return (NULL);
@@ -106,16 +205,16 @@ char	*ft_strnjoin(char *s1, char *s2, size_t size)
 	if (!str)
 		return (NULL);
 	i = 0;
-    j = 0;
+	j = 0;
 	while (s1[i])
-    {
-        str[i] = s1[i];
-        i++;
-    }
+	{
+		str[i] = s1[i];
+		i++;
+	}
 	while (j < size)
-        str[i++] = s2[j++];
+		str[i++] = s2[j++];
 	str[i] = '\0';
-    free(s1);
+	free(s1);
 	return (str);
 }
 
@@ -134,20 +233,20 @@ char	*ft_strnjoin(char *s1, char *s2, size_t size)
 //     {
 //         doller_pos = ft_strchr(new, '$');
 //         // if(*(doller_pos + 1) == '?') //need to ask Nur san
-//         //     return print_endval();
+//         //     return (print_endval());
 //         // while(new[i] != '$')
 //         //     i++;
 //         printf("%s\n", doller_pos);
 //         if(*(doller_pos + 1) == '{')
 //         {
 //             if(!ft_strchr(new, '}'))
-//                 return printf("bad substitution\n"), NULL; 
-//             new = case_closed(new, env, &ex_len);   
+//                 return (printf("bad substitution\n"), NULL);
+//             new = case_closed(new, env, &ex_len);
 //         }
 //         else
 //             new = case_not_closed(new, env, &ex_len);
 //         if(!new)
-//             return free(val), NULL;
+//             return (free(val), NULL);
 //         // printf("%s %zu\n", new, ex_len);
 //         // if(flag == 0)
 //         // {
@@ -159,27 +258,51 @@ char	*ft_strnjoin(char *s1, char *s2, size_t size)
 //         printf("%s\n", new + i);
 //         //free(val);
 //     }
-//     return new;
+//     return (new);
 // }
 
-char *case_closed(char *val, t_env *env, size_t *ex_len)
+char	*case_closed(char *val, t_env *env, size_t *ex_len, int exit_status)
 {
-    char *new;
-    char *search_key;
-    char *re_enval;
-    int cp_size;
-    
-    cp_size = ft_strchr(val, '}') - ft_strchr(val, '{') - 1;
-    search_key = ft_strndup(ft_strchr(val, '{') + 1, cp_size);
-    if(!search_key)
-        return NULL;
-    re_enval = search_env(env, search_key);
-    if(!re_enval)
-        return NULL;
-    new = make_new_str(val, search_key, re_enval);
-    if(!new)
-        return NULL;
-    *ex_len = ft_strlen(re_enval);
-    free(val);
-    return new;
+	char	*new;
+	char	*search_key;
+	char	*re_enval;
+	int		cp_size;
+
+	if(is_exit_expand(val))
+    {
+        search_key = ft_strdup("?");
+        if (!search_key)
+	    	return (NULL);
+        re_enval = ft_itoa(exit_status);
+         if (!re_enval)
+	    	return free(search_key), (NULL);
+    }
+    else
+    {
+        cp_size = ft_strchr(val, '}') - ft_strchr(val, '{') - 1;
+	    search_key = ft_strndup(ft_strchr(val, '{') + 1, cp_size);
+	    if (!search_key)
+	    	return (NULL);
+	    re_enval = search_env(env, search_key);
+	    if (!re_enval)
+	    	return free(search_key), (NULL);
+    }
+	new = make_new_str(val, search_key, re_enval);
+	if (!new)
+		return free(search_key), free(re_enval), (NULL);
+	*ex_len = ft_strlen(re_enval);
+	free(val);
+    free(search_key);
+    free(re_enval);
+	return (new);
+}
+
+int is_exit_expand(char *val)
+{
+    char *dol_pos;
+
+    dol_pos = ft_strchr(val, '$');
+    if(!ft_strncmp("${?}", dol_pos, 4))
+        return 1;
+    return 0;
 }

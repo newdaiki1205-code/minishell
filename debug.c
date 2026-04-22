@@ -29,6 +29,8 @@ void print_tokeninfo(t_token *tokens)
 
 void print_nodeinfo(t_node *node)
 {
+    t_narg *current;
+
     if(node->type == ND_COMMAND)
     {
         printf("ND_COMMAND:");
@@ -36,10 +38,11 @@ void print_nodeinfo(t_node *node)
         {
             printf("[redirect:%i filename:%s] ", node->red.type, node->red.filename);
         }
-        while(node->args)
+        current = node->args;
+        while(current)
 	    {
-            printf("%s(quotation_state: %i, flag=%i) ", node->args->val, node->args->q_state, node->args->flag_cat);
-		    node->args = node->args->next;
+            printf("%s(quotation_state: %i, flag=%i) ", current->val, current->q_state, current->flag_cat);
+		    current = current->next;
 	    }
         printf("\n");
     }

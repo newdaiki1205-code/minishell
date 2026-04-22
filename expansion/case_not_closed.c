@@ -6,32 +6,44 @@
 /*   By: dshirais <dshirais@student.42vienna.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/13 17:06:42 by dshirais          #+#    #+#             */
-/*   Updated: 2026/04/16 14:53:36 by dshirais         ###   ########.fr       */
+/*   Updated: 2026/04/21 21:36:38 by dshirais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "excution.h"
 
-char *case_not_closed(char *val, t_env *env, size_t *ex_len)
+char *case_not_closed(char *val, t_env *env, size_t *ex_len, int exit_status)
 {
     char *new;
     char *search_key;
     char *re_enval;
     int key_size;
     
-    key_size = is_valid_name(ft_strchr(val, '$') + 1);
-    if(!key_size)
+    if(*(ft_strchr(val, '$') + 1) == '?')
     {
-        new = ft_strdup(val);
-        free(val);
-        return new;
+        search_key = ft_strdup("?");
+        if (!search_key)
+	    	return (NULL);
+        re_enval = ft_itoa(exit_status);
+         if (!re_enval)
+	    	return free(search_key), (NULL);
     }
-    search_key = ft_strndup(ft_strchr(val, '$') + 1, key_size);
-    if(!search_key)
-        return NULL;
-    re_enval = search_env(env, search_key);
-    if(!re_enval)
-        return NULL;
+    else
+    {
+        key_size = is_valid_name(ft_strchr(val, '$') + 1);
+        if(!key_size)
+        {
+            new = ft_strdup(val);
+            free(val);
+            return new;
+        }
+        search_key = ft_strndup(ft_strchr(val, '$') + 1, key_size);
+        if(!search_key)
+            return NULL;
+        re_enval = search_env(env, search_key);
+        if(!re_enval)
+            return NULL;
+    }
     if(!*re_enval)
         new = mod_str(val, search_key);
     else
@@ -40,6 +52,8 @@ char *case_not_closed(char *val, t_env *env, size_t *ex_len)
         return NULL;
     *ex_len = ft_strlen(re_enval);
     free(val);
+    free(search_key);
+    free(re_enval); 
     return new;
 }
 
@@ -99,7 +113,7 @@ char *mod_str(char *src, char *enkey)
             j++;
         }
     }
-    new[size] = '\0';
+    // new[size] = '\0';
     return new;
 }
 
@@ -113,6 +127,7 @@ char *make_new_ncstr(char *src, char *enkey, char *enval)
     size_t val_size;    
 
 	size = ft_strlen(src) - (ft_strlen(enkey) + 1) + ft_strlen(enval);
+    //printf("src: %s(%zu char), enkey: %s(%zu char), enval: %s(%zu char)\n", src, ft_strlen(src), enkey, ft_strlen(enkey), enval, ft_strlen(enval));
     new = (char*)ft_calloc(size + 1, sizeof(char));
     if(!new)
         return NULL;

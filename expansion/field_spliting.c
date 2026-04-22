@@ -1,25 +1,47 @@
 #include "expansion.h"
 
-t_narg *field_splitiing(t_narg *src)
+t_narg *field_splitiing(t_narg *src, t_env *env)
 {
 	char **tab;
 	int size;
 	t_narg *re;
+	char *ifs_val;
 	
-	if(is_IFS(src->val))
+	ifs_val = search_env(env, "IFS");
+	if(!ifs_val)
+		return NULL;
+	if(*ifs_val)
+		tab = ifs_split(src->val, ifs_val);
+	else if(is_IFS(src->val))
 		tab = ft_split(src->val);
 	else
-		return src;
+		return free(ifs_val), src;
 	if(!tab)
-		return NULL;
+		return free(ifs_val), NULL;
+	free(ifs_val);
 	size = 0;
 	while(tab[size])
 		size++;
 	re = expand_list(src, tab, size);
 	if(!re)
-		return NULL;
+		return free_tab(tab), NULL;
+	free_tab(tab);
 	return re;
 }
+
+void free_tab(char **tab)
+{
+	int i;
+
+	i = 0;
+	while(tab[i])
+	{
+		free(tab[i]);
+		i++;
+	}
+	free(tab);
+}
+
 
 t_narg *expand_list(t_narg *src, char **tab, int size)
 {
