@@ -6,16 +6,16 @@
 /*   By: dshirais <dshirais@student.42vienna.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/12 13:22:58 by dshirais          #+#    #+#             */
-/*   Updated: 2026/04/26 21:14:10 by dshirais         ###   ########.fr       */
+/*   Updated: 2026/05/01 22:36:20 by dshirais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef EXPANSION_H
 # define EXPANSION_H
 
-# include "std.h"
-# include "parser.h"
 # include "excution.h"
+# include "parser.h"
+# include "std.h"
 
 typedef struct s_utils
 {
@@ -26,27 +26,35 @@ typedef struct s_utils
 	size_t	size;
 }			t_utils;
 
+typedef struct s_expand
+{
+	size_t	ex_len;
+	size_t	pos;
+	size_t	copy_len;
+}			t_expand;
+
 int			expansion(t_node *tree, t_env *env, int exit_status);
 
 t_narg		*traverse_args(t_narg *args, t_env *env, int exit_status);
 
 char		*expand_val(t_narg *node, t_env *env, int exit_status);
-char		*expand_one_val(char *src, t_env *env, size_t *ex_len,
+char		*expand_one_val(char *src, t_env *env, t_expand *info,
 				int exit_status);
 char		*make_reval(char *src, char *new, size_t copy_len);
 char		*update_src(char *src, char *new);
 
 size_t		dol_finder(char *val);
-void		num_init(size_t *ex_len, size_t *pos, char *val);
-size_t		how_many_copy(t_nquote q_state, char *new);
+void		num_init(t_expand *info, char *val);
+size_t		how_many_copy(t_expand *info, t_nquote q_state, char *new);
 char		*ft_strnjoin(char *s1, char *s2, size_t size);
 
-char		*case_closed(char *val, t_env *env, size_t *ex_len,
+char		*case_closed(char *val, t_env *env, t_expand *info,
 				int exit_status);
 char		*expand_inside(char *val, t_env *env, int exit_status,
-				size_t *ex_len);
-char		*case_exit_status(int exit_status, char *val, size_t *ex_len);
-char		*val_in_curly_braces(char *val, t_env *env, size_t *ex_len);
+				t_expand *info);
+char		*case_exit_status(int exit_status, char *val, t_expand *info,
+				int flag);
+char		*val_in_curly_braces(char *val, t_env *env, t_expand *info);
 
 int			is_exit_expand(char *val);
 int			is_closed(char *val);
@@ -61,16 +69,19 @@ char		*search_env(t_env *env, char *search_key);
 char		*ft_strndup(const char *s, int size);
 int			ft_strcmp(const char *s1, const char *s2);
 
-char		*case_not_closed(char *val, t_env *env, size_t *ex_len,
+char		*case_not_closed(char *val, t_env *env, t_expand *info,
 				int exit_status);
 char		*expand_unclosed_para(char *val, t_env *env, int exit_status,
-				size_t *ex_len);
-char		*val_without_braces(char *val, t_env *env, size_t *ex_len);
+				t_expand *info);
+char		*val_without_braces(char *val, t_env *env, t_expand *info);
 
 int			is_underscores(char c);
 int			is_valid_name(char *str);
 int			name_check(char c);
 char		*mod_str(char *src, char *enkey);
+
+char		*case_invalid_name(char *src, t_expand *info);
+char		*make_char_invlid(char *src, int size_before, char *restart);
 
 t_narg		*field_splitiing(t_narg *src, t_env *env);
 int			is_ifs(char *str);

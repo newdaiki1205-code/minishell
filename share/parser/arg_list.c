@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   arg_list_gen.c                                     :+:      :+:    :+:   */
+/*   arg_list.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dshirais <dshirais@student.42vienna.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/23 20:47:39 by dshirais          #+#    #+#             */
-/*   Updated: 2026/04/23 20:53:51 by dshirais         ###   ########.fr       */
+/*   Updated: 2026/05/01 16:18:02 by dshirais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ t_narg	*make_arg_list(t_narg **args, t_token *current)
 	if (!new)
 		return (NULL);
 	new->val = ft_strdup(current->value);
+	if (!new->val)
+		return (NULL);
 	quotation_handler(new, current);
 	new->flag_cat = 0;
 	if (current->flag_cat)

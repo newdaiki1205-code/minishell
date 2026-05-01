@@ -6,7 +6,7 @@
 /*   By: dshirais <dshirais@student.42vienna.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/26 18:08:17 by dshirais          #+#    #+#             */
-/*   Updated: 2026/04/26 18:08:46 by dshirais         ###   ########.fr       */
+/*   Updated: 2026/05/01 18:18:34 by dshirais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ char	*quote_remove(t_narg *node)
 	size_t	q_start;
 	char	quot;
 
+	if (!*node->val)
+		return (node->val);
 	size = ft_strlen(node->val) - 2;
 	if (node->q_state == ND_DOUBLE)
 		quot = 34;

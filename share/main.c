@@ -6,7 +6,7 @@
 /*   By: dshirais <dshirais@student.42vienna.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/30 20:30:03 by dshirais          #+#    #+#             */
-/*   Updated: 2026/04/26 21:22:42 by dshirais         ###   ########.fr       */
+/*   Updated: 2026/05/01 22:39:05 by dshirais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,12 +66,14 @@ t_node	*parse_input(char *input, t_env *env)
 	tokens = lexer(input);
 	if (!tokens)
 		return (NULL);
-	// print_tokeninfo(tokens);
+	//print_tokeninfo(tokens);
 	parse_tree = parser(&tokens);
 	if (!parse_tree)
 		return (NULL);
 	// printf("Before Expansion\n");
 	// debug_parser(parse_tree);
+	if(redirection(parse_tree, env, exit_status))
+		return(free_parser_error(parse_tree), NULL);
 	if (expansion(parse_tree, env, exit_status))
 		return (free_parser_error(parse_tree), NULL);
 	// printf("\nAfter Expansion\n");

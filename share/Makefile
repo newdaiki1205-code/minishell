@@ -2,12 +2,14 @@ NAME = test
 
 SRC = main.c debug.c ft_env.c\
 	lexer/tokenize_utils.c lexer/token_rule.c lexer/token_counter.c lexer/input_split.c lexer/toknizer.c lexer/lexer.c lexer/categorize.c\
-	parser/parser.c parser/parser_utils.c parser/recursive_descent.c parser/node_pipe.c parser/node_command.c parser/arg_list.c parser/free_parser.c\
+	parser/parser.c parser/parser_utils.c parser/recursive_descent.c parser/node_pipe.c parser/node_command.c parser/rd_handler.c parser/arg_list.c\
+	parser/free_parser.c parser/free_parser_utils.c parser/rd_handler_utils.c\
 	expansion/expansion.c expansion/expansion_utils.c\
 	expansion/expand_val/expand_val.c expansion/expand_val/expand_val_utils.c expansion/expand_val/case_closed.c expansion/expand_val/case_closed_utils.c\
-	expansion/expand_val/case_not_closed.c expansion/expand_val/make_new_str.c expansion/expand_val/case_not_closed_utils.c\
+	expansion/expand_val/case_not_closed.c expansion/expand_val/make_new_str.c expansion/expand_val/case_not_closed_utils.c expansion/expand_val/case_invalid_name.c\
 	expansion/field_split/field_spliting.c expansion/field_split/fsp_utils.c expansion/field_split/expand_list.c \
-	expansion/after_fsp/quote_remove.c expansion/after_fsp/finalize_argument.c	expansion/after_fsp/passed_arg_table.c
+	expansion/after_fsp/quote_remove.c expansion/after_fsp/finalize_argument.c	expansion/after_fsp/passed_arg_table.c\
+	redirection/redirection.c redirection/make_here_doc.c redirection/expand_here_doc.c
 OBJ = $(SRC:.c=.o)
 
 LIBFT       = libft/libft.a 

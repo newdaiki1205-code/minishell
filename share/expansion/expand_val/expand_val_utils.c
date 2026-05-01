@@ -6,7 +6,7 @@
 /*   By: dshirais <dshirais@student.42vienna.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/23 22:26:39 by dshirais          #+#    #+#             */
-/*   Updated: 2026/04/26 18:30:09 by dshirais         ###   ########.fr       */
+/*   Updated: 2026/05/01 22:34:54 by dshirais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,30 +22,33 @@ size_t	dol_finder(char *val)
 	return (before_dol);
 }
 
-void	num_init(size_t *ex_len, size_t *pos, char *val)
+void	num_init(t_expand *info, char *val)
 {
-	*ex_len = 0;
-	*pos = dol_finder(val);
+	info->ex_len = 0;
+	info->pos = dol_finder(val);
 }
 
-size_t	how_many_copy(t_nquote q_state, char *new)
+size_t	how_many_copy(t_expand *info, t_nquote q_state, char *new)
 {
-	size_t	copy_len;
 	size_t	i;
 
 	i = 0;
 	if (q_state != ND_DEF && ft_strlen(new) == 2)
-		copy_len = 2;
+		info->copy_len = 2;
 	else if (*new)
 	{
-		i++;
+		if (!ft_strcmp(new, "$") || (!is_valid_name(new)))
+		{
+			info->copy_len = 1;
+			return (info->copy_len);
+		}
 		while (new[i] && new[i] != '$')
 			i++;
-		copy_len = i;
+		info->copy_len = i;
 	}
 	else
-		return (0);
-	return (copy_len);
+		info->copy_len = 0;
+	return (info->copy_len);
 }
 
 char	*ft_strnjoin(char *s1, char *s2, size_t size)

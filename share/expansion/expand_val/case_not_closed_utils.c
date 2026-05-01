@@ -6,7 +6,7 @@
 /*   By: dshirais <dshirais@student.42vienna.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/24 16:12:00 by dshirais          #+#    #+#             */
-/*   Updated: 2026/04/24 16:22:44 by dshirais         ###   ########.fr       */
+/*   Updated: 2026/05/01 17:28:47 by dshirais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,9 +59,13 @@ char	*mod_str(char *src, char *enkey)
 	while (i < size)
 	{
 		if (src[j] == '$')
+		{
 			j = j + key_size + 1;
+			break ;
+		}
 		else
 			new[i++] = src[j++];
 	}
+	ft_memcpy(&new[i], &src[j], size - i);
 	return (new);
 }
